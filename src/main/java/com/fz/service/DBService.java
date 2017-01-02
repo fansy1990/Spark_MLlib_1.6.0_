@@ -180,6 +180,10 @@ public class DBService {
             baseDao.save(new HConstants("spark.yarn.scheduler.heartbeat.interval-ms",
                     "1000",
                     "Spark 提交任务等待时间"));
+            baseDao.save(new HConstants("spark.yarn.dist.archives",
+                    "hdfs://quickstart:8020/user/root/hadoop-common-2.6.0-cdh5.8.0.jar",
+                    "Spark executor extra jars ,逗号分割"));
+
             baseDao.save(new HConstants("spark.driver.memory","512M","Spark Driver 内存"));
             baseDao.save(new HConstants("spark.num.executors","2","Spark executor 个数"));
             baseDao.save(new HConstants("spark.executor.memory","256M","Spark executor 内存"));

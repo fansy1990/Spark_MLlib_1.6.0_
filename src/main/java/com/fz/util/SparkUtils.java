@@ -37,10 +37,13 @@ public class SparkUtils {
             sparkConf.set("spark.yarn.jar", Utils.getKey("spark.yarn.jar", Utils.dbOrFile));
             sparkConf.set("spark.yarn.scheduler.heartbeat.interval-ms",
                     Utils.getKey("spark.yarn.scheduler.heartbeat.interval-ms", Utils.dbOrFile));
+            // classnotfound 异常
+            sparkConf.set("spark.yarn.dist.archives",Utils.getKey("spark.yarn.dist.archives",Utils.dbOrFile));
 
             ClientArguments cArgs = new ClientArguments(args, sparkConf);
 
             Client client = new Client(cArgs, HUtils.getConf(), sparkConf);
+            client.run();
             // client.run(); // 去掉此种调用方式，改为有下面的调用方式，这样可以返回jobID
 
              // 调用Spark
@@ -60,6 +63,8 @@ public class SparkUtils {
             // 清空临时文件
             cleanupStagingDir(appId);
             return null;
+        }finally{
+            cleanupStagingDir(appId);
         }
     }
 
