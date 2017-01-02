@@ -122,10 +122,10 @@ public class Utils {
 	 * @return
 	 */
 	public static String getEntityPackages(String tableName){
-		return "com.com.fz.model."+tableName;
+		return "com.fz.model."+tableName;
 	}
 	public static String getThreadPackages(String thread){
-		return "com.com.fz.thread."+thread;
+		return "com.fz.thread."+thread;
 	}
 	/**
 	 * 获得根路径
