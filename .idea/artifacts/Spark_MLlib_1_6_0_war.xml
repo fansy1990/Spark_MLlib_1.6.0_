@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Spark_MLlib_1.6.0:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="v1_6.war">
+      <element id="artifact" artifact-name="Spark_MLlib_1.6.0:war exploded" />
+    </root>
+  </artifact>
+</component>

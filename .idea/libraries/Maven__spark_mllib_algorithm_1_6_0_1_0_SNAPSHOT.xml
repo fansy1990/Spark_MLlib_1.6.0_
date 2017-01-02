@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: spark:mllib.algorithm.1.6.0:1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../.m2/local_repo/spark/mllib.algorithm.1.6.0/1.0-SNAPSHOT/mllib.algorithm.1.6.0-1.0-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../../../.m2/local_repo/spark/mllib.algorithm.1.6.0/1.0-SNAPSHOT/mllib.algorithm.1.6.0-1.0-SNAPSHOT-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../.m2/local_repo/spark/mllib.algorithm.1.6.0/1.0-SNAPSHOT/mllib.algorithm.1.6.0-1.0-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
