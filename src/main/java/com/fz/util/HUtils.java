@@ -38,7 +38,7 @@ public class HUtils {
 	private static JobClient jobClient = null;
 	
 	public static final String HDFSPRE= "/user/algorithm/input";
-	public static final String LOCALPRE= "../../../src/main/data/";
+	public static final String LOCALPRE= "../../src/main/data/";
 
 	public static Configuration getConf() {
 
@@ -184,12 +184,12 @@ public class HUtils {
 			ret.put("return_txt", localPath+"上传至"+hdfsPath+"成功");
 			Utils.simpleLog(localPath+"上传至"+hdfsPath+"成功");
 		} catch (Exception e) {
-			ret.put("dbOrFile", "false");
+			ret.put("flag", "false");
 			ret.put("msg", e.getMessage());
 			e.printStackTrace();
 			return ret;
 		}
-		ret.put("dbOrFile", "true");
+		ret.put("flag", "true");
 		ret.put("msg", "HDFS:'"+hdfsPath+"'");
 		return ret;
 	}
@@ -235,12 +235,12 @@ public class HUtils {
 				}
 			}
 		} catch (Exception e) {
-			ret.put("dbOrFile", "false");
+			ret.put("flag", "false");
 			ret.put("msg", e.getMessage());
 			e.printStackTrace();
 			return ret;
 		}
-		ret.put("dbOrFile", "true");
+		ret.put("flag", "true");
 		return ret;
 	}
 

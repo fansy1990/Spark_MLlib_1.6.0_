@@ -16,7 +16,7 @@ import java.util.Map;
 public class ReadTxt implements INotMRJob {
 	private String input;
 	private String lines;
-	
+
 
 	@Override
 	public void setArgs(String[] args) {
@@ -32,12 +32,12 @@ public class ReadTxt implements INotMRJob {
 		try{
 			txt = HUtils.readTxt(input, lines, "<br>");
 			txt ="文件的内容是:<br>"+txt;
-			map.put("dbOrFile", "true");
+			map.put("flag", "true");
 			
 			map.put("return_txt", txt);
 		}catch(Exception e){
 			e.printStackTrace();
-			map.put("dbOrFile", "false");
+			map.put("flag", "false");
 			map.put("monitor", "false");
 			map.put("msg", input+"读取失败！");
 		}
