@@ -5,6 +5,7 @@ package com.fz.service;
 
 import com.fz.dao.BaseDAO;
 import com.fz.model.HConstants;
+import com.fz.util.HUtils;
 import com.fz.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -128,6 +129,10 @@ public class DBService {
 			// 根据表名获得实体类，并赋值
 			Object o = Utils.getEntity(Utils.getEntityPackages(tableName),json);
 			baseDao.saveOrUpdate(o);
+            if("HConstants".equals(tableName)){
+                // 更新HUtils里面的Configuration；
+                HUtils.updateConfiguration();
+            }
 			log.info("保存表{}！",new Object[]{tableName});
 		}catch(Exception e){
 			
@@ -172,6 +177,12 @@ public class DBService {
 			baseDao.save(new HConstants("yarn.resourcemanager.address","quickstart:8032","ResourceManager主机及端口"));
 			baseDao.save(new HConstants("yarn.resourcemanager.scheduler.address","quickstart:8030","Scheduler主机及端口"));
 			baseDao.save(new HConstants("mapreduce.jobhistory.address","quickstart:10020","JobHistory主机及端口"));
+            baseDao.save(new HConstants("platform","cdh","apache或cdh或hdp"));
+            baseDao.save(new HConstants("apache.yarn.application.classpath","","apache 集群classpath"));
+            baseDao.save(new HConstants("cdh.yarn.application.classpath","$HADOOP_CLIENT_CONF_DIR,$HADOOP_CONF_DIR," +
+                    "$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*," +
+                    "$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*","cdh 集群classpath"));
+            baseDao.save(new HConstants("hdp.yarn.application.classpath","","hdp 集群classpath"));
 
 
             baseDao.save(new HConstants("spark.yarn.jar",
@@ -180,9 +191,9 @@ public class DBService {
             baseDao.save(new HConstants("spark.yarn.scheduler.heartbeat.interval-ms",
                     "1000",
                     "Spark 提交任务等待时间"));
-            baseDao.save(new HConstants("spark.yarn.dist.archives",
-                    "hdfs://quickstart:8020/user/root/hadoop-common-2.6.0-cdh5.8.0.jar",
-                    "Spark executor extra jars ,逗号分割"));
+//            baseDao.save(new HConstants("spark.yarn.dist.archives",
+//                    "hdfs://quickstart:8020/user/root/hadoop-common-2.6.0-cdh5.8.0.jar",
+//                    "Spark executor extra jars ,逗号分割"));
 
             baseDao.save(new HConstants("spark.driver.memory","512M","Spark Driver 内存"));
             baseDao.save(new HConstants("spark.num.executors","2","Spark executor 个数"));
@@ -191,7 +202,8 @@ public class DBService {
                     "Spark 算法所在jar包"));
             baseDao.save(new HConstants("spark.files","hdfs://quickstart:8020/user/root/yarn-site.xml",
                     "YARN site 文件所在路径"));
-
+            // 做完更新后，需要更新Configuration
+            HUtils.updateConfiguration();
         }catch(Exception e){
 			e.printStackTrace();
 			return false;

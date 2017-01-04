@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
 public class Utils {
 
 	// hadoop 常量
-    public static boolean dbOrFile = true; // get configuration from db or file
+    public static boolean dbOrFile = false; // get configuration from db or file
     // ,true : db,false:file
 	//
 	public static String baseServicePacakges="com.fz.service.*";

@@ -40,9 +40,19 @@ public class HUtils {
 	public static final String HDFSPRE= "/user/algorithm/input";
 	public static final String LOCALPRE= "../../src/main/data/";
 
+    /**
+     * 修改完数据库需要更新Configuration
+     */
+    public static void updateConfiguration(){
+        conf = null;
+        getConf();
+    }
+
 	public static Configuration getConf() {
 
 		if (conf == null) {
+//            // 设置 提交任务系统版本，需要在，这种设置不行，提示UninLoginModel少包
+//            System.setProperty("os.name",Utils.getKey("os.name",Utils.dbOrFile));
 			conf = new Configuration();
 			// get configuration from db or file
 			conf.setBoolean("mapreduce.app-submission.cross-platform", "true"
@@ -57,6 +67,23 @@ public class HUtils {
 					"yarn.resourcemanager.scheduler.address", Utils.dbOrFile));// 指定资源分配器
 			conf.set("mapreduce.jobhistory.address",
 					Utils.getKey("mapreduce.jobhistory.address", Utils.dbOrFile));
+
+            /**
+             * CDH 集群远程提交Spark任务到YARN集群，出现
+             * java.lang.NoClassDefFoundError: org/apache/hadoop/conf/Configuration
+             * 异常，需要设置mapreduce.application.classpath 参数 或
+             * yarn.application.classpath 参数
+             */
+            switch (Utils.getKey("platform",Utils.dbOrFile)){
+                case "apache" : conf.set("yarn.application.classpath",
+                        Utils.getKey("apache.yarn.application.classpath",Utils.dbOrFile));break;
+                case "cdh" :conf.set("yarn.application.classpath",
+                        Utils.getKey("cdh.yarn.application.classpath",Utils.dbOrFile));break;
+                case "hdp" :conf.set("yarn.application.classpath",
+                        Utils.getKey("hdp.yarn.application.classpath",Utils.dbOrFile));break;
+                default: Utils.simpleLog("由于platform不是apahce/cdh/hdp，所以不设置yarn.application.classpath参数");
+            }
+
 		}
 
 		return conf;

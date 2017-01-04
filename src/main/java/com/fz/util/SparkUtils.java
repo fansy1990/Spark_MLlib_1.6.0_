@@ -38,7 +38,7 @@ public class SparkUtils {
             sparkConf.set("spark.yarn.scheduler.heartbeat.interval-ms",
                     Utils.getKey("spark.yarn.scheduler.heartbeat.interval-ms", Utils.dbOrFile));
             // classnotfound 异常
-            sparkConf.set("spark.yarn.dist.archives",Utils.getKey("spark.yarn.dist.archives",Utils.dbOrFile));
+//            sparkConf.set("spark.yarn.dist.archives",Utils.getKey("spark.yarn.dist.archives",Utils.dbOrFile));
 
             ClientArguments cArgs = new ClientArguments(args, sparkConf);
 
@@ -111,6 +111,9 @@ public class SparkUtils {
         args[11] = Utils.getKey("spark.jar",Utils.dbOrFile);
         args[12] = "--files" ;
         args[13] = Utils.getKey("spark.files",Utils.dbOrFile) ;
+//        args[14] = "--archives" ;
+//        args[15] = Utils.getKey("spark.yarn.dist.archives",Utils.dbOrFile) ;
+
         int j=14;
         for(int i= 0  ; i< classArgs.length; i++ ){
             args[j++] = "--arg";
