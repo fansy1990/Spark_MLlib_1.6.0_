@@ -8,6 +8,9 @@ Hibernate4.3.1，struts2.3.1，Maven3.2.1，Spark1.6
   1）配置好db.properties中相应用户名密码／数据库等参数；
   2）第一次启动tomcat，修改hibernate.cfg.xml文件中的hibernate.hbm2ddl.auto值为create，第二次启动修改为update；
   3) 打开集群参数页面，点击初始化，初始化集群参数，如果集群参数和当前集群不匹配，那么需要做相应修改；
+     暂时考虑使用配置文件的方式来配置集群参数，如果要调整为数据库配置，那么修改Utisl.dbOrFile参数即可；
+     即，暂时只需修改utisl.properties文件；
+     
   4）拷贝Spark_MLlib_Algorithm_1.6.0工程生成的算法到到3）中spark.jar所在路径；
   5）拷贝集群中的yarn-site.xml到3）中spark.files所在路径；
   6）拷贝spark-assembly-1.6.0-cdh5.8.0-hadoop2.6.0-cdh5.8.0.jar到3）中spark.yarn.jar所在路径；

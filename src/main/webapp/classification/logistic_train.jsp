@@ -11,7 +11,7 @@
 				<td><label >数据输入路径:</label>
 				</td>
 				<td><input class="easyui-validatebox" type="text"
-				 value="/user/algorithm/input/logistic.dat"
+				 value="hdfs://quickstart:8020/user/algorithm/input/logistic.dat"
 					id="logistic_train_input" data-options="required:true" style="width:300px" />
 				</td>
 			</tr>
@@ -26,7 +26,7 @@
 				<td><label >模型输出路径:</label>
 				</td>
 				<td><input class="easyui-validatebox" type="text" 
-				 value="/user/algorithm/model/logistic/output00"
+				 value="hdfs://quickstart:8020/user/algorithm/model/logistic/output00"
 					id="logistic_train_output" data-options="required:true" style="width:300px" />
 				</td>
 			</tr>

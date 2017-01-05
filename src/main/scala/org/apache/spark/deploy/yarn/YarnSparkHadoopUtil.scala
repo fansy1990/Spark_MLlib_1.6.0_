@@ -360,7 +360,8 @@ object YarnSparkHadoopUtil {
    */
   def escapeForShell(arg: String): String = {
     if (arg != null) {
-      if (false) {// always in shell edited by fansy 2017/1/4
+      //if (Utils.isWindows) { original
+        if(false){// always in shell edited by fansy 2017/1/4
         YarnCommandBuilderUtils.quoteForBatchScript(arg)
       } else {
         val escaped = new StringBuilder("'")

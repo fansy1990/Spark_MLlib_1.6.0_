@@ -191,7 +191,7 @@ public class DBService {
             baseDao.save(new HConstants("spark.yarn.scheduler.heartbeat.interval-ms",
                     "1000",
                     "Spark 提交任务等待时间"));
-//            baseDao.save(new HConstants("spark.yarn.dist.archives",
+//            baseDao.save(new HConsExecutorRunnabletants("spark.yarn.dist.archives",
 //                    "hdfs://quickstart:8020/user/root/hadoop-common-2.6.0-cdh5.8.0.jar",
 //                    "Spark executor extra jars ,逗号分割"));
 

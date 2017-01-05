@@ -47,6 +47,7 @@ public class LogisticCallable implements CallableWithArgs {
 		
 		Utils.printStringArr(args);
 		try {
+            // 在每个算法里面自己删除自己的输出目录，而不是在算法里面去删除输出目录
 			HUtils.getFs().delete(new Path(output), true);
 			String[] runArgs = SparkUtils.constructArgs(appName,className,args);
             String jobId = SparkUtils.runSpark(runArgs);//
