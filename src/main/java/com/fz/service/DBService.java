@@ -179,9 +179,7 @@ public class DBService {
 			baseDao.save(new HConstants("mapreduce.jobhistory.address","quickstart:10020","JobHistory主机及端口"));
             baseDao.save(new HConstants("platform","cdh","apache或cdh或hdp"));
             baseDao.save(new HConstants("apache.yarn.application.classpath","","apache 集群classpath"));
-            baseDao.save(new HConstants("cdh.yarn.application.classpath","$HADOOP_CLIENT_CONF_DIR,$HADOOP_CONF_DIR," +
-                    "$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*," +
-                    "$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*","cdh 集群classpath"));
+
             baseDao.save(new HConstants("hdp.yarn.application.classpath","","hdp 集群classpath"));
 
 
@@ -194,7 +192,17 @@ public class DBService {
 //            baseDao.save(new HConsExecutorRunnabletants("spark.yarn.dist.archives",
 //                    "hdfs://quickstart:8020/user/root/hadoop-common-2.6.0-cdh5.8.0.jar",
 //                    "Spark executor extra jars ,逗号分割"));
-
+            // TODO 字段数据过长，待解决
+            baseDao.save(new HConstants("spark.yarn.dist.archives","/usr/lib/spark/lib/spark-assembly.jar:" +
+                    "/usr/lib/hadoop/lib/*:/usr/lib/hadoop/*:/usr/lib/hadoop-hdfs/lib/*:/usr/lib/hadoop-hdfs/*:" +
+                    "/usr/lib/hadoop-mapreduce/lib/*:/usr/lib/hadoop-mapreduce/*:/usr/lib/hadoop-yarn/lib/*:" +
+                    "/usr/lib/hadoop-yarn/*:/usr/lib/hive/lib/*:/usr/lib/flume-ng/lib/*:/usr/lib/paquet/lib/*:" +
+                    "/usr/lib/avro/lib/*","SPARK_DIST_CLASSPATH路径"));
+            baseDao.save(new HConstants("cdh.yarn.application.classpath","/usr/lib/spark/lib/spark-assembly.jar:" +
+                    "/usr/lib/hadoop/lib/*:/usr/lib/hadoop/*:/usr/lib/hadoop-hdfs/lib/*:/usr/lib/hadoop-hdfs/*:" +
+                    "/usr/lib/hadoop-mapreduce/lib/*:/usr/lib/hadoop-mapreduce/*:/usr/lib/hadoop-yarn/lib/*:" +
+                    "/usr/lib/hadoop-yarn/*:/usr/lib/hive/lib/*:/usr/lib/flume-ng/lib/*:/usr/lib/paquet/lib/*:" +
+                    "/usr/lib/avro/lib/*","cdh 集群classpath"));
             baseDao.save(new HConstants("spark.driver.memory","512M","Spark Driver 内存"));
             baseDao.save(new HConstants("spark.num.executors","2","Spark executor 个数"));
             baseDao.save(new HConstants("spark.executor.memory","256M","Spark executor 内存"));
