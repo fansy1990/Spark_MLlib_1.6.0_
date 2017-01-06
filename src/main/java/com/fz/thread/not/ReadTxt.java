@@ -4,6 +4,7 @@
 package com.fz.thread.not;
 
 import com.fz.util.HUtils;
+import com.fz.util.Utils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,13 +34,12 @@ public class ReadTxt implements INotMRJob {
 			txt = HUtils.readTxt(input, lines, "<br>");
 			txt ="文件的内容是:<br>"+txt;
 			map.put("flag", "true");
-			
+			map.put("msg","读取成功");
 			map.put("return_txt", txt);
 		}catch(Exception e){
 			e.printStackTrace();
 			map.put("flag", "false");
-			map.put("monitor", "false");
-			map.put("msg", input+"读取失败！");
+			map.put("msg", e.getMessage().substring(0, Utils.EXCEPTIONMESSAGELENGTH));
 		}
 		return map;
 	}

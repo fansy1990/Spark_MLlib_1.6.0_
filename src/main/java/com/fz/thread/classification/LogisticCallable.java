@@ -56,7 +56,7 @@ public class LogisticCallable implements CallableWithArgs {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			Utils.simpleLog("Logistic Regression 任务错误！");
+			Utils.simpleLog("Logistic Regression 提交任务错误！");
 		}
         return null;
 	}

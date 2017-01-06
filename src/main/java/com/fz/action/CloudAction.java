@@ -90,8 +90,8 @@ public class CloudAction extends ActionSupport {
 	public void submitSparkJob(){
 		Map<String ,Object> map = new HashMap<String,Object>();
 		try {
-			// 2. 使用Thread的方式启动一组MR任务
-			// 2.1 生成Runnable接口
+			// 2. 使用Thread的方式启动Spark任务
+			// 2.1 生成Callable接口
 			CallableWithArgs<String> runJob = (CallableWithArgs) Utils.getClassByName(
 					Utils.THREADPACKAGES+algorithm);
 			// 2.2 设置参数
@@ -102,11 +102,10 @@ public class CloudAction extends ActionSupport {
             String result = null;
             int i= 0;
             while (true){
-                Thread.sleep(1000);
-                i++;
                 if (future.isDone()) {
                     try {
                         result = future.get();
+                        Utils.simpleLog("算法："+algorithm+"被成功提交，其任务ID是："+result);
                         break;
                     } catch (InterruptedException e) {
                         // ignored
@@ -114,29 +113,33 @@ public class CloudAction extends ActionSupport {
                         // ignored
                     }
                 }
-                if(i>=20){break;}
-
+                if(i>=Utils.SUBMIT2APPIDTIMEOUT){
+                    Utils.simpleLog("已过"+Utils.SUBMIT2APPIDTIMEOUT+"秒提交周期，集群资源不足或网络异常!");
+                    break;
+                }
+                Thread.sleep(1000);
+                i++;
             }
 
             if(result == null || "".equals(result)){// 任务失败
-                map.put("dbOrFile", "false");
+                map.put("flag", "false");
                 map.put("msg", "任务提交失败！");
             }else{// 任务成功
-                map.put("dbOrFile","true");
+                map.put("flag","true");
                 map.put("msg", "任务提交成功，其ID为："+ result);
                 // 写数据到数据库中，JobID相关，任务状态为Submitted
                 if(!currentJobInfoService.save(new JobInfo(result))){
-                    map.put("dbOrFile","false");
+                    map.put("flag","false");
                     map.put("msg","提交任务成功，但是把相关数据存入数据库失败，请查看后台日志！");
                 }
             }
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			map.put("dbOrFile", "false");
-			map.put("monitor", "false");
+			map.put("flag", "false");
 			map.put("msg", "任务启动失败！");
 		}
+        Utils.print(map);
 		Utils.write2PrintWriter(JSON.toJSONString(map));
 	}
 

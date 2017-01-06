@@ -11,6 +11,8 @@ import org.apache.struts2.ServletActionContext;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.context.ContextLoader;
 
 import java.io.File;
@@ -29,7 +31,11 @@ import java.util.ResourceBundle;
  */
 public class Utils {
 
-	// hadoop 常量
+    public static final int EXCEPTIONMESSAGELENGTH = 30;
+    public static final int SUBMIT2APPIDTIMEOUT = 30;
+
+    private static Logger logger = LoggerFactory.getLogger(Utils.class);
+    // hadoop 常量
     public static boolean dbOrFile = false; // get configuration from db or file
     // ,true : db,false:file
 	//
@@ -169,8 +175,9 @@ public class Utils {
 	 * @param msg
 	 */
 	public static void simpleLog(String msg){
-		System.out.println(new java.util.Date()+":"+msg);
-	}
+//		System.out.println(new java.util.Date()+":"+msg);
+	    logger.info(msg);
+    }
 
 
 	
@@ -212,4 +219,15 @@ public class Utils {
 	public static String getFileName(String file){
 		return new File(file).getName();
 	}
+
+    /**
+     * 打印map
+     * @param map
+     */
+    public static void print(Map<String, Object> map) {
+        System.out.println("print map==============================");
+        for(Map.Entry kv : map.entrySet()){
+            System.out.println("key:"+kv.getKey()+"->"+ kv.getValue());
+        }
+    }
 }

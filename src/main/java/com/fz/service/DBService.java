@@ -167,7 +167,7 @@ public class DBService {
 	 * 初始化HConstants
 	 * @return
 	 */
-	public boolean insertHConstants(){
+	public boolean insertHConstants() throws Exception{
 		try{
 			baseDao.executeHql("delete HConstants");
             // @TODO 是否需要修改次此配置 ???
@@ -213,8 +213,8 @@ public class DBService {
             // 做完更新后，需要更新Configuration
             HUtils.updateConfiguration();
         }catch(Exception e){
-			e.printStackTrace();
-			return false;
+			Utils.simpleLog("HConstant表初始化异常！");
+			throw e;
 		}
 		return true;
 	}

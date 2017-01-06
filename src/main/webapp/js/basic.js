@@ -31,36 +31,19 @@ function callByAJax(url,data_){
 			console.info("close the progressbar:"+data.flag);
 			var retMsg;
 			if("true"==data.flag){
-				retMsg='操作成功！';
+				retMsg=data.msg;
 				if(typeof data.return_show !="undefined"){// 读取文件
 					var return_id = "#"+data.return_show+"";
-//					var obj=document.getElementById(data.return_show);
-//					obj.html(data.return_txt);
 					$(return_id).html(data.return_txt);
-//					console.info($(return_id));
 					console.info('defined:'+data.return_show);
 				}
 			}else{
-				retMsg='操作失败！';
-				if(typeof data.return_show !="undefined"){// 读取文件
-					var return_id = "#"+data.return_show+"";
-					$(return_id).html(data.msg);
-					
-				}
+			    retMst = '操作失败！具体原因：'+data.msg;
 			}
 			$.messager.show({
 				title : '提示',
 				msg : retMsg
 			});
-			
-			//if("true"==data.flag&&"true"==data.monitor){// 添加监控页面
-			//	// 使用单独Tab的方式
-			//	layout_center_addTabFun({
-			//		title : 'MR算法监控',
-			//		closable : true,
-			//		href : 'monitor/monitor.jsp'
-			//	});
-			//}
 			
 		}
 	});

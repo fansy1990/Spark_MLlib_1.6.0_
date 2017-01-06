@@ -69,14 +69,17 @@ public class DBAction extends ActionSupport {
 	 */
 	public void initialTable(){
 		boolean initRet = false;
-		if("LoginUser".equals(tableName)){
+        try {
+            if ("LoginUser".equals(tableName)) {
 //			initRet=dBService.insertLoginUser();
-		}else if("HConstants".equals(tableName)){
-			initRet=dBService.insertHConstants();
-		}else{
+            } else if ("HConstants".equals(tableName)) {
+                initRet = dBService.insertHConstants();
+            } else {
 //			initRet = dBService.insertUserData();
-		}
-		
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 		Utils.write2PrintWriter(initRet);
 	}
 

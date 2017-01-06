@@ -44,21 +44,7 @@ $(function(){
 		callByAJax('cloud/cloud_submitJobNotMR.action',{algorithm:'ReadTxt',arg1:input,arg2:select_value});
 	});
 	// ============ readtxt =================
-	
-	// ============ resplitseq
-	$('#resplitseq_submit').bind('click', function(){
-		var files=$('#resplitseq_files').combobox("getValue");
-		var input=$('#resplitseq_input').val();
-		var output=$('#resplitseq_output').val();
-		// 弹出进度框
-		popupProgressbar('提示','数据分割中...',1000);
-		// ajax 异步提交任务
-		callByAJax('cloud/cloud_submitJobNotMR.action',{algorithm:'ResplitSeq',
-			arg1:input,arg2:output,arg3:files});
-	});
-	// ============ resplitseq =================
-	
-	
+
 	
 	// ============ readcluster
 	$('#readcluster_submit').bind('click', function(){

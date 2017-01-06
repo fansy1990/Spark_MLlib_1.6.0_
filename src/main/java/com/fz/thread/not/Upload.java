@@ -32,10 +32,9 @@ public class Upload implements INotMRJob {
 
 	@Override
 	public Map<String, Object> runJob() {
-		Map<String ,Object> map = new HashMap<String,Object>();
 		String local=null;
 		String hdfs=null;
-		if(flag!=null&& "initial".equals(flag)){// initial上传
+		if(flag!=null&& "initial".equals(flag)){// initial上传,指的是本地示例文件上传到HDFS
 			// arg1-> select_value, arg2->algorithm ;arg3->'initial'
 			String filename = select_value;
 
@@ -49,9 +48,24 @@ public class Upload implements INotMRJob {
 		}
 		
 		//  arg1-> input (local), arg2-> hdfs
-		
-		map = HUtils.upload(local, hdfs);
-		return map;
+        Map<String, Object> ret = new HashMap<String, Object>();
+        ret.put("return_show", "upload_return");
+        try {
+             if( HUtils.upload(local, hdfs)) {
+                 ret.put("return_txt", local + "上传至" + hdfs + "成功!");
+
+                 ret.put("flag", "true");
+                 ret.put("msg", "上传至 HDFS:'" + hdfs + "'" + "成功！");
+
+                 Utils.simpleLog(hdfs + "上传至" + hdfs + "成功");
+             }
+        }catch(Exception e){
+            ret.put("flag", "false");
+            ret.put("msg", e.getMessage().substring(0,Utils.EXCEPTIONMESSAGELENGTH));
+            e.printStackTrace();
+        }
+
+        return ret;
 	}
 
 }

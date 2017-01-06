@@ -200,25 +200,18 @@ public class HUtils {
 	 * @param hdfsPath
 	 * @return
 	 */
-	public static Map<String, Object> upload(String localPath, String hdfsPath) {
-		Map<String, Object> ret = new HashMap<String, Object>();
+	public static boolean upload(String localPath, String hdfsPath) throws Exception{
+
 		FileSystem fs = getFs();
 		Path src = new Path(localPath);
 		Path dst = new Path(hdfsPath);
-		ret.put("return_show", "upload_return");
+
 		try {
 			fs.copyFromLocalFile(src, dst);
-			ret.put("return_txt", localPath+"上传至"+hdfsPath+"成功");
-			Utils.simpleLog(localPath+"上传至"+hdfsPath+"成功");
 		} catch (Exception e) {
-			ret.put("flag", "false");
-			ret.put("msg", e.getMessage());
-			e.printStackTrace();
-			return ret;
+	        throw e;
 		}
-		ret.put("flag", "true");
-		ret.put("msg", "HDFS:'"+hdfsPath+"'");
-		return ret;
+		return true;
 	}
 
 	/**
