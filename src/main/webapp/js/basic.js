@@ -28,18 +28,25 @@ function callByAJax(url,data_){
 		context : document.body,
 		success : function(data) {
 			closeProgressbar();
-			console.info("close the progressbar:"+data.flag);
-			var retMsg;
-			if("true"==data.flag){
-				retMsg=data.msg;
-				if(typeof data.return_show !="undefined"){// 读取文件
-					var return_id = "#"+data.return_show+"";
-					$(return_id).html(data.return_txt);
-					console.info('defined:'+data.return_show);
-				}
-			}else{
-			    retMst = '操作失败！具体原因：'+data.msg;
-			}
+
+			var retMsg = data.msg;
+//			if("true"==data.flag){
+//				retMsg=data.msg;
+//				if(typeof data.return_show !="undefined"){// 读取文件
+//					var return_id = "#"+data.return_show+"";
+//					$(return_id).html(data.return_txt);
+//					console.info('defined:'+data.return_show);
+//				}
+//			}else{
+//			    retMst = '操作失败！具体原因：'+data.msg;
+//			    console.info(retMsg);
+//			}
+			// 不管提交成功或失败，都显示提示信息
+			if(typeof data.return_show !="undefined"){// 读取文件
+                var return_id = "#"+data.return_show+"";
+                $(return_id).html(data.return_txt);
+                console.info('defined:'+data.return_show);
+            }
 			$.messager.show({
 				title : '提示',
 				msg : retMsg
@@ -49,15 +56,6 @@ function callByAJax(url,data_){
 	});
 }
 
-function exitsMRmonitor(){
-	var t = $('#layout_center_tabs');
-	if (t.tabs('exists', "MR算法监控")) {
-		$.messager.alert("操作提示", "请先关闭MR监控页面！","info"); 
-		return true;
-	} else {
-		return false;
-	}
-}
 
 function layout_center_addTabFun(opts) {
 		var t = $('#layout_center_tabs');

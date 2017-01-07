@@ -2,13 +2,16 @@ package com.fz.action;
 
 import com.alibaba.fastjson.JSON;
 import com.fz.service.DBService;
-import com.fz.util.Utils;
+import com.fz.utils.HUtils;
+import com.fz.utils.Utils;
 import com.opensymphony.xwork2.ActionSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component("dBAction")
@@ -27,7 +30,40 @@ public class DBAction extends ActionSupport {
 	private String id;
 	
 	private String json;
-	
+
+    private int records; // 获取JobInfo中的总个数
+
+    /**
+     * 获取JobInfo表数据，
+     * 规则：
+     * 1. 获取JobInfo中最新的records条记录；
+     * 2. 查找其中isFinished字段为false的数据；
+     * 3. 根据2中查找的数据，去YARN获取其实时状态，并更新1中的数据，然后存入数据库中；
+     * 4. 根据row和page字段分页返回JSON数据；
+     */
+    public void getJobInfo(){
+        Map<String ,Object> jsonMap = new HashMap<String,Object>();
+        // 1.
+        List<Object> jobInfos = dBService.getLastNRows("JobInfo","jobId",true,records);
+        // 2,3
+        List<Object> list = null;
+        try {
+            list = HUtils.updateJobInfo(jobInfos);
+            dBService.updateTableData(list);
+        }catch (Exception e){
+            e.printStackTrace();
+            Utils.simpleLog("更新任务状态异常！");
+            jsonMap.put("total", 0);
+            jsonMap.put("rows", null);
+            Utils.write2PrintWriter(JSON.toJSONString(jsonMap));
+            return ;
+        }
+        // 4.
+        jsonMap.put("total",list.size());
+        jsonMap.put("rows",Utils.getSubList(list,page,rows));
+        Utils.write2PrintWriter(JSON.toJSONString(jsonMap));
+    }
+
 	/**
 	 * 根据tableName分页获取表数据
 	 */
@@ -137,5 +173,11 @@ public class DBAction extends ActionSupport {
 	}
 
 
-	
+    public int getRecords() {
+        return records;
+    }
+
+    public void setRecords(int records) {
+        this.records = records;
+    }
 }

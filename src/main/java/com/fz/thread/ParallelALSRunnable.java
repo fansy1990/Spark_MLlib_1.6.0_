@@ -3,10 +3,9 @@
  */
 package com.fz.thread;
 
-import com.fz.util.HUtils;
-import com.fz.util.Utils;
+import com.fz.utils.HUtils;
+import com.fz.utils.Utils;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.util.ToolRunner;
 //import org.apache.mahout.cf.taste.hadoop.als.ParallelALSFactorizationJob;
 
 /**

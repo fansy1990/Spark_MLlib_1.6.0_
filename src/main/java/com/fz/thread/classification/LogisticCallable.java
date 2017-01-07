@@ -4,9 +4,9 @@
 package com.fz.thread.classification;
 
 import com.fz.thread.CallableWithArgs;
-import com.fz.util.HUtils;
-import com.fz.util.SparkUtils;
-import com.fz.util.Utils;
+import com.fz.utils.HUtils;
+import com.fz.utils.SparkUtils;
+import com.fz.utils.Utils;
 import org.apache.hadoop.fs.Path;
 
 /**

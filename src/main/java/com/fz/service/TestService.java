@@ -5,7 +5,7 @@ package com.fz.service;
 
 import com.fz.dao.BaseDAO;
 import com.fz.model.User;
-import com.fz.util.HUtils;
+import com.fz.utils.HUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

@@ -3,12 +3,7 @@
  */
 package com.fz.model;
 
-import com.fz.util.Utils;
-import org.apache.hadoop.mapred.JobStatus;
-import org.apache.hadoop.mapred.RunningJob;
-
 import javax.persistence.*;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -45,7 +40,7 @@ public class JobInfo implements Serializable{
         this.jobId = jobId;
     }
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     public JobState getRunState() {
         return runState;
     }
@@ -75,14 +70,14 @@ public class JobInfo implements Serializable{
     private Date modifiedTime;
 
     public boolean isFinished() {
-        return isFinished;
+        return finished;
     }
 
     public void setFinished(boolean isFinished) {
-        this.isFinished = isFinished;
+        this.finished = isFinished;
     }
 
-    private boolean isFinished;
+    private boolean finished;
 
 
     public JobInfo(){}
@@ -95,7 +90,7 @@ public class JobInfo implements Serializable{
         this.jobId = jobId;
         this.startTime = new Date(System.currentTimeMillis());
         this.runState= JobState.SUBMITTED;
-        this.isFinished = false;
+        this.finished = false;
     }
 
 

@@ -179,4 +179,6 @@ public interface BaseDAO<T> {
 	 * @return
 	 */
 	Integer saveBatch(List<T> lists);
-}  
+
+    public void updateBatch(List<T> list);
+}

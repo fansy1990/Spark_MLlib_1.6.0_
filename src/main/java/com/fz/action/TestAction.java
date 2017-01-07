@@ -1,8 +1,8 @@
 //package com.fz.action;
 //
 //import com.fz.service.TestService;
-//import com.fz.util.HUtils;
-//import com.fz.util.Utils;
+//import HUtils;
+//import Utils;
 //import com.opensymphony.xwork2.ActionSupport;
 //import org.apache.hadoop.examples.WordCount;
 //import org.apache.hadoop.examples.WordCount.IntSumReducer;

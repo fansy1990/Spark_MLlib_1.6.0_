@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.fz.util;
+package com.fz.utils;
 
 //import java.util.HashMap;
 
@@ -19,10 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * 工具类
@@ -31,8 +28,8 @@ import java.util.ResourceBundle;
  */
 public class Utils {
 
-    public static final int EXCEPTIONMESSAGELENGTH = 30;
-    public static final int SUBMIT2APPIDTIMEOUT = 30;
+    public static final int EXCEPTIONMESSAGELENGTH = 30;// 异常字符串截取长度
+    public static final int SUBMIT2APPIDTIMEOUT = 50;// 提交任务最长时间阈值
 
     private static Logger logger = LoggerFactory.getLogger(Utils.class);
     // hadoop 常量
@@ -179,7 +176,40 @@ public class Utils {
 	    logger.info(msg);
     }
 
+    public static void simpleWarnLog(String msg){
+//		System.out.println(new java.util.Date()+":"+msg);
+        logger.warn(msg);
+    }
 
+    /**
+     * 更新map值，用于返回前台
+     * @param map
+     * @param flagStr
+     * @param msgStr
+     * @param return_showStr
+     * @param return_txtStr
+     */
+    public static void updateMap(Map<String,Object> map , String flagStr,String msgStr,
+                                 String return_showStr,String return_txtStr){
+        map.put("flag", flagStr);
+        map.put("msg", msgStr);
+        map.put("return_show",return_showStr);
+        map.put("return_txt",return_txtStr);
+        return ;
+    }
+
+    /**
+     * 更新map值，用于返回前台 return_txt 和msg内容一样
+     * @param map
+     * @param flagStr
+     * @param msgStr
+     * @param return_showStr
+     */
+    public static void updateMap(Map<String,Object> map , String flagStr,String msgStr,
+                                 String return_showStr){
+        updateMap(map,flagStr,msgStr,return_showStr,msgStr);
+        return ;
+    }
 	
 	/**
 	 * double 或者float或者int转为百分数
@@ -229,5 +259,33 @@ public class Utils {
         for(Map.Entry kv : map.entrySet()){
             System.out.println("key:"+kv.getKey()+"->"+ kv.getValue());
         }
+    }
+
+    /**
+     * 获取List中的某页数据值
+     * @param list
+     * @param page
+     * @param rows
+     * @return
+     */
+    public static Object getSubList(List<Object> list, int page, int rows) {
+        int start = (page-1) *rows ;
+        int end = list.size() < rows ? list.size(): (start + rows -1);
+        return list.subList(start, end);
+    }
+
+    /**
+     * 根据算法名获取类名
+     * @param algorithm 算法名是包名+类名
+     * @return
+     */
+    public static String algorithm2ShowId(String algorithm) {
+        try {
+            String[] alg_class = algorithm.split("\\.");
+            return alg_class[alg_class.length - 1];
+        }catch(Exception e){
+            Utils.simpleWarnLog("算法：" + algorithm + "类名变换异常!");
+        }
+        return null;
     }
 }

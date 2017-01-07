@@ -1,4 +1,4 @@
-package com.fz.util;
+package com.fz.utils;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

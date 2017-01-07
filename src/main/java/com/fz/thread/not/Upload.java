@@ -3,10 +3,9 @@
  */
 package com.fz.thread.not;
 
-import com.fz.util.HUtils;
-import com.fz.util.Utils;
+import com.fz.utils.HUtils;
+import com.fz.utils.Utils;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,19 +48,20 @@ public class Upload implements INotMRJob {
 		
 		//  arg1-> input (local), arg2-> hdfs
         Map<String, Object> ret = new HashMap<String, Object>();
-        ret.put("return_show", "upload_return");
+//        ret.put("return_show", "upload_return");
         try {
              if( HUtils.upload(local, hdfs)) {
-                 ret.put("return_txt", local + "上传至" + hdfs + "成功!");
-
-                 ret.put("flag", "true");
-                 ret.put("msg", "上传至 HDFS:'" + hdfs + "'" + "成功！");
-
+//                 ret.put("return_txt", local + "上传至" + hdfs + "成功!");
+//
+//                 ret.put("flag", "true");
+//                 ret.put("msg", "上传至 HDFS:'" + hdfs + "'" + "成功！");
+                Utils.updateMap(ret,"true",local + "上传至" + hdfs + "成功!","upload_return");
                  Utils.simpleLog(hdfs + "上传至" + hdfs + "成功");
              }
         }catch(Exception e){
-            ret.put("flag", "false");
-            ret.put("msg", e.getMessage().substring(0,Utils.EXCEPTIONMESSAGELENGTH));
+//            ret.put("flag", "false");
+//            ret.put("msg", e.getMessage().substring(0,Utils.EXCEPTIONMESSAGELENGTH));
+            Utils.updateMap(ret,"false",e.getMessage().substring(0,Utils.EXCEPTIONMESSAGELENGTH),"upload_return");
             e.printStackTrace();
         }
 

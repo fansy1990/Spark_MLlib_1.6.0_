@@ -8,7 +8,7 @@ import com.fz.model.JobInfo;
 import com.fz.service.CurrentJobInfoService;
 import com.fz.thread.CallableWithArgs;
 import com.fz.thread.not.INotMRJob;
-import com.fz.util.Utils;
+import com.fz.utils.Utils;
 import com.opensymphony.xwork2.ActionSupport;
 import org.springframework.stereotype.Component;
 
@@ -122,15 +122,21 @@ public class CloudAction extends ActionSupport {
             }
 
             if(result == null || "".equals(result)){// 任务失败
-                map.put("flag", "false");
-                map.put("msg", "任务提交失败！");
+//                map.put("flag", "false");
+//                map.put("msg", "任务提交失败！");
+                // 每个页面提示信息的div id是 该算法的名字，其实也是类名
+                Utils.updateMap(map,"false","任务提交失败",Utils.algorithm2ShowId(algorithm)+"_id");
             }else{// 任务成功
-                map.put("flag","true");
-                map.put("msg", "任务提交成功，其ID为："+ result);
+//                map.put("flag","true");
+//                map.put("msg", "任务提交成功，其ID为："+ result);
+                Utils.updateMap(map,"true","任务提交成功，其ID为："+ result,
+                        Utils.algorithm2ShowId(algorithm)+"_id");
                 // 写数据到数据库中，JobID相关，任务状态为Submitted
                 if(!currentJobInfoService.save(new JobInfo(result))){
-                    map.put("flag","false");
-                    map.put("msg","提交任务成功，但是把相关数据存入数据库失败，请查看后台日志！");
+//                    map.put("flag","false");
+//                    map.put("msg","提交任务成功，但是把相关数据存入数据库失败，请查看后台日志！");
+                    Utils.updateMap(map,"false","提交任务成功，但是把相关数据存入数据库失败，请查看后台日志！",
+                            Utils.algorithm2ShowId(algorithm)+"_id");
                 }
             }
 
@@ -138,6 +144,8 @@ public class CloudAction extends ActionSupport {
 			e.printStackTrace();
 			map.put("flag", "false");
 			map.put("msg", "任务启动失败！");
+            Utils.updateMap(map,"false","任务启动失败！",
+                    Utils.algorithm2ShowId(algorithm)+"_id");
 		}
         Utils.print(map);
 		Utils.write2PrintWriter(JSON.toJSONString(map));

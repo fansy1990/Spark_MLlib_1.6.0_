@@ -5,8 +5,8 @@ package com.fz.service;
 
 import com.fz.dao.BaseDAO;
 import com.fz.model.HConstants;
-import com.fz.util.HUtils;
-import com.fz.util.Utils;
+import com.fz.utils.HUtils;
+import com.fz.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -75,7 +75,23 @@ public class DBService {
 		jsonMap.put("rows", list);
 		return jsonMap;
 	}
-	
+
+    /**
+     *
+     * 根据提供的个数，返回最新的n个记录
+     * @param n
+     * @param tableName 表名
+     * @param sortField 根据哪个字段排序
+     * @param descOrNot 降序还是升序, true为降序
+     * @return
+     */
+    public List<Object> getLastNRows(String tableName,String sortField,boolean descOrNot, int n){
+        List<Object> jobInfos = new ArrayList<>();
+        String hql = "select j from "+tableName+" j ORDER BY "+sortField+ (descOrNot ?" desc":"");
+        jobInfos =baseDao.find(hql, new Object[]{}, 1, n);// 通过设置分页即可设置最多返回n个记录
+        return jobInfos;
+    }
+
 	/**
 	 * 保存数据
 	 * @param list
@@ -92,7 +108,17 @@ public class DBService {
 		
 		return true;
 	}
-	
+
+    public boolean updateTableData(List<Object> list){
+        try{
+            baseDao.updateBatch(list);
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
 	public boolean deleteById(String tableName,String id){
 		String hql ="delete " + tableName +"  tb where tb.id='"+id+"'";
 		try{

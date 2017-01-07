@@ -46,7 +46,7 @@ public class BaseDaoImpl<T> implements BaseDAO<T> {
   
     public void saveOrUpdate(T o) {  
         this.getCurrentSession().saveOrUpdate(o);  
-    }  
+    }
   
     public List<T> find(String hql) {  
         return this.getCurrentSession().createQuery(hql).list();  
@@ -178,9 +178,16 @@ public class BaseDaoImpl<T> implements BaseDAO<T> {
         return q.executeUpdate();  
     }
 
-	@Override
+	@Override // TODO 未实现方法： 批量保存数据
 	public Integer saveBatch(List<T> lists) {
 		return null;
 	}
-  
+
+    @Override
+    public void updateBatch(List<T> list) {
+        for(T t :list){
+            update(t);
+        }
+    }
+
 }  

@@ -84,7 +84,8 @@
 			</tr>
 			
 		</table>
-	
+        <br>
+        <div id="LogisticCallable_id" style="padding-left: 30px;font-size: 14px;padding-top:10px;"></div>
 	</div> 
 	<script type="text/javascript" src="js/mr_classification.js"></script>  
 

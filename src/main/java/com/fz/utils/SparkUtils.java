@@ -1,8 +1,9 @@
-package com.fz.util;
+package com.fz.utils;
 
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.yarn.api.records.ApplicationId;
+import org.apache.hadoop.yarn.util.ConverterUtils;
 import org.apache.spark.SparkConf;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,7 +100,9 @@ public class SparkUtils {
             log.warn("Failed to cleanup staging dir " + appStagingDir, e);
         }
     }
-
+    public static void cleanupStagingDir(String appId) {
+        cleanupStagingDir(getAppId(appId));
+    }
     /**
      * 根据类参数构造Spark提交任务参数
      * @param classArgs
@@ -146,5 +149,15 @@ public class SparkUtils {
 //                "--arg",inputArgs[5]
 //        };
         return args;
+    }
+
+    /**
+     * 根据JobId构造ApplicationId
+     * @param jobId
+     * @return
+     */
+    public static ApplicationId getAppId(String jobId){
+        return ConverterUtils
+                .toApplicationId(jobId);
     }
 }

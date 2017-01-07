@@ -1,9 +1,10 @@
 /**
  * 
  */
-package com.fz.util;
+package com.fz.utils;
 
 import com.fz.model.JobInfo;
+import com.fz.model.JobState;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
 import org.apache.hadoop.fs.FileSystem;
@@ -11,9 +12,11 @@ import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.SequenceFile.Reader;
 import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.io.WritableUtils;
-import org.apache.hadoop.mapred.JobClient;
-import org.apache.hadoop.mapred.JobStatus;
 import org.apache.hadoop.util.ReflectionUtils;
+import org.apache.hadoop.yarn.api.records.ApplicationReport;
+import org.apache.hadoop.yarn.client.api.YarnClient;
+import org.apache.hadoop.yarn.exceptions.YarnException;
+
 
 import java.io.*;
 import java.util.*;
@@ -35,7 +38,7 @@ public class HUtils {
 
 
 
-	private static JobClient jobClient = null;
+	private static YarnClient client = null;
 	
 	public static final String HDFSPRE= "/user/algorithm/input";
 	public static final String LOCALPRE= "../../src/main/data/";
@@ -57,14 +60,14 @@ public class HUtils {
 			// get configuration from db or file
 			conf.setBoolean("mapreduce.app-submission.cross-platform", "true"
 					.equals(Utils.getKey(
-							"mapreduce.app-submission.cross-platform", Utils.dbOrFile)));// 配置使用跨平台提交任务
+                            "mapreduce.app-submission.cross-platform", Utils.dbOrFile)));// 配置使用跨平台提交任务
 			conf.set("fs.defaultFS", Utils.getKey("fs.defaultFS", Utils.dbOrFile));// 指定namenode
 			conf.set("mapreduce.framework.name",
 					Utils.getKey("mapreduce.framework.name", Utils.dbOrFile)); // 指定使用yarn框架
 			conf.set("yarn.resourcemanager.address",
 					Utils.getKey("yarn.resourcemanager.address", Utils.dbOrFile)); // 指定resourcemanager
 			conf.set("yarn.resourcemanager.scheduler.address", Utils.getKey(
-					"yarn.resourcemanager.scheduler.address", Utils.dbOrFile));// 指定资源分配器
+                    "yarn.resourcemanager.scheduler.address", Utils.dbOrFile));// 指定资源分配器
 			conf.set("mapreduce.jobhistory.address",
 					Utils.getKey("mapreduce.jobhistory.address", Utils.dbOrFile));
 
@@ -74,13 +77,13 @@ public class HUtils {
              * 异常，需要设置mapreduce.application.classpath 参数 或
              * yarn.application.classpath 参数
              */
-            switch (Utils.getKey("platform",Utils.dbOrFile)){
+            switch (Utils.getKey("platform", Utils.dbOrFile)){
                 case "apache" : conf.set("yarn.application.classpath",
-                        Utils.getKey("apache.yarn.application.classpath",Utils.dbOrFile));break;
+                        Utils.getKey("apache.yarn.application.classpath", Utils.dbOrFile));break;
                 case "cdh" :conf.set("yarn.application.classpath",
-                        Utils.getKey("cdh.yarn.application.classpath",Utils.dbOrFile));break;
+                        Utils.getKey("cdh.yarn.application.classpath", Utils.dbOrFile));break;
                 case "hdp" :conf.set("yarn.application.classpath",
-                        Utils.getKey("hdp.yarn.application.classpath",Utils.dbOrFile));break;
+                        Utils.getKey("hdp.yarn.application.classpath", Utils.dbOrFile));break;
                 default: Utils.simpleLog("由于platform不是apahce/cdh/hdp，所以不设置yarn.application.classpath参数");
             }
 
@@ -118,59 +121,6 @@ public class HUtils {
 		}
 
 		return buff.toString();
-	}
-
-
-	public static void printJobStatus(JobStatus js) {
-		System.out.println(new Date() + ":jobId:"
-				+ js.getJobID().toString() + ",map:" + js.getMapProgress()
-				+ ",reduce:" + js.getReduceProgress() + ",finish:"
-				+ js.getRunState());
-	}
-
-	/**
-	 * @return the jobClient
-	 */
-	public static JobClient getJobClient() {
-		if (jobClient == null) {
-			try {
-				jobClient = new JobClient(getConf());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return jobClient;
-	}
-
-	/**
-	 * @param jobClient
-	 *            the jobClient to set
-	 */
-	public static void setJobClient(JobClient jobClient) {
-		HUtils.jobClient = jobClient;
-	}
-
-	/**
-	 * 判断一组MR任务是否完成
-	 *
-	 * @param currentJobInfo
-	 * @return
-	 */
-	public static String hasFinished(JobInfo currentJobInfo) {
-
-		if (currentJobInfo != null) {
-			if ("SUCCEEDED".equals(currentJobInfo.getRunState())) {
-				return "success";
-			}
-			if ("FAILED".equals(currentJobInfo.getRunState())) {
-				return "fail";
-			}
-			if ("KILLED".equals(currentJobInfo.getRunState())) {
-				return "kill";
-			}
-		}
-
-		return "running";
 	}
 
 	/**
@@ -409,14 +359,92 @@ public class HUtils {
 				srcs[i]=files[i].getPath();
 			}
 			boolean flag =FileUtil.copy(fs,srcs,fs,out,false,true,conf);
-			Utils.simpleLog("数据从"+input.toString()+"传输到"+out.toString()+
-					(flag?"成功":"失败")+"!");
+			Utils.simpleLog("数据从" + input.toString() + "传输到" + out.toString() +
+                    (flag ? "成功" : "失败") + "!");
 		}catch(Exception e){
 			e.printStackTrace();
-			Utils.simpleLog("数据从"+input.toString()+"传输到"+out.toString()+
-					"失败"+"!");
+			Utils.simpleLog("数据从" + input.toString() + "传输到" + out.toString() +
+                    "失败" + "!");
 		}
 	}
 
+    /**
+     * 更新Spark 任务状态
+     * @param jobInfos
+     */
+    public static List<Object> updateJobInfo(List<Object> jobInfos)throws YarnException,IOException{
+        List<Object> list = new ArrayList<>();
+        JobInfo jobInfo;
+        for(Object o :jobInfos){
+            jobInfo = (JobInfo) o;
+            if(!jobInfo.isFinished()){ // 如果没有完成，则检查其最新状态
+                ApplicationReport appReport=null;
+                try {
+                   appReport = getClient().getApplicationReport(SparkUtils.getAppId(jobInfo.getJobId()));
+                } catch (YarnException  | IOException e) {
+                    e.printStackTrace();
+                    throw e;
+                }
+                /**
+                 * NEW, 0
+                 NEW_SAVING, 1
+                 SUBMITTED, 2
+                 ACCEPTED, 3
+                 RUNNING, 4
+                 FINISHED, 5
+                 FAILED, 6
+                 KILLED; 7
+                 */
+                switch (appReport.getYarnApplicationState().ordinal()){
+                    case 0 | 1 | 2 |3 : // 都更新为Accepted状态
+                        jobInfo.setRunState(JobState.ACCETPED);
+                        break;
+                    case 4 :
+                        jobInfo.setRunState(JobState.RUNNING);break;
+                    case 5:
+//                        UNDEFINED,
+//                                SUCCEEDED,
+//                                FAILED,
+//                                KILLED;
+                        switch (appReport.getFinalApplicationStatus().ordinal()){
+                            case 1: jobInfo.setRunState(JobState.SUCCESSED);
+                            SparkUtils.cleanupStagingDir(jobInfo.getJobId());
+                            jobInfo.setFinished(true);break;
+                            case 2:
+                                jobInfo.setRunState(JobState.FAILED);
+                                SparkUtils.cleanupStagingDir(jobInfo.getJobId());
+                                jobInfo.setFinished(true);break;
+                            case 3:
+                                jobInfo.setRunState(JobState.KILLED);
+                                SparkUtils.cleanupStagingDir(jobInfo.getJobId());
+                                jobInfo.setFinished(true);break;
+                            default: Utils.simpleLog("App:" + jobInfo.getJobId() + "获取任务状态异常!");
+                        }
 
+                    default: Utils.simpleLog("App:" + jobInfo.getJobId() + "获取任务状态异常!");
+                }
+                jobInfo.setModifiedTime(new Date());
+            }
+            list.add(jobInfo);// 把更新后的或原始的JobInfo添加到list中
+        }
+
+        return list;
+    }
+
+    /**
+     * 获取Client ,用于获取Spark任务的状态
+     * @return
+     */
+    public static YarnClient getClient() {
+        if(client == null){
+            client = YarnClient.createYarnClient();
+            client.init(getConf());
+            client.start(); // TODO start后，等待Tomcat关闭的时候才stop
+        }
+        return client;
+    }
+
+    public static void setClient(YarnClient client) {
+        HUtils.client = client;
+    }
 }
