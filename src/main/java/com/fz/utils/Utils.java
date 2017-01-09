@@ -270,7 +270,9 @@ public class Utils {
      */
     public static Object getSubList(List<Object> list, int page, int rows) {
         int start = (page-1) *rows ;
-        int end = list.size() < rows ? list.size(): (start + rows -1);
+        int end = page * rows ;
+        end = end > list.size() ? list.size() : end ;
+        System.out.println("start:"+start+",end:"+end);
         return list.subList(start, end);
     }
 

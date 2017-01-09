@@ -67,10 +67,10 @@
 			}
 		},{
 			"id":132,
-			"text":"线性回归",
+			"text":"SVM分类",
 			"attributes":{
 				"folder":"0",
-				"url":"classification/linear_regression_train.jsp"
+				"url":"classification/svm_train.jsp"
 			}
 		},{
 			"id":133,

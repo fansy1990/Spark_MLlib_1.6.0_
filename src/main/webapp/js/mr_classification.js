@@ -28,84 +28,37 @@ $(function(){
 		
 	});
 	
-	// ------trainnb
-	
-	
-	// testnb---
-	$('#testnb_submit').bind('click', function(){
-		
-		// 检查是否有“MR监控页面”，如果有，则退出，并提示关闭
-		if(exitsMRmonitor()){
-			return ;
-		}	
-		var input=$('#testnb_input').val();//
-		var output=$('#testnb_output').val();//
-		var model=$('#testnb_model').val();//
-		var labelIndex=$('#testnb_labelIndex').val();
-		
-		var jobnums_='1'; // 一共的MR个数
-		// 弹出进度框
-		popupProgressbar('分类MR','testnb任务提交中...',1000);
-		// ajax 异步提交任务
-		
-		callByAJax('cloud/cloud_submitIterMR.action',{algorithm:"TestNaiveBayesDriverRunnable",jobnums:jobnums_,
-			arg1:input,arg2:output,arg3:model,arg4:labelIndex	});
-		
-	});
-//	==================testnb
-	
-	
-	// buildforest---
-	$('#buildforest_submit').bind('click', function(){
-		
-		// 检查是否有“MR监控页面”，如果有，则退出，并提示关闭
-		if(exitsMRmonitor()){
-			return ;
-		}	
-		var input=$('#buildforest_input').val();//
-		var output=$('#buildforest_output').val();//
-		var describe=$('#buildforest_describe').val();//
-		var selection=$('#buildforest_selection').val();//
-		var minsplit=$('#buildforest_minsplit').val();
-		var minprop=$('#buildforest_minprop').val();
-		var nbtrees=$('#buildforest_nbtrees').val();
-		var complete=$('#buildforest_complete').combobox("getValue");
-		var jobnums_='1'; // 一共的MR个数
-		// 弹出进度框
-		popupProgressbar('分类MR','buildforest任务提交中...',1000);
-		// ajax 异步提交任务
-		
-		callByAJax('cloud/cloud_submitJob.action',{algorithm:"BuildForestRunnable",jobnums:jobnums_,
-			arg1:input,arg2:output,arg3:describe,arg4:selection,arg5:minsplit,arg6:minprop,
-			arg7:nbtrees,arg8:complete});
-		
-	});
-//	==================buildforest
-	
-	
-	
-	// testforest---
-	$('#testforest_submit').bind('click', function(){
-		
-		// 检查是否有“MR监控页面”，如果有，则退出，并提示关闭
-		if(exitsMRmonitor()){
-			return ;
-		}	
-		var input=$('#testforest_input').val();//
-		var output=$('#testforest_output').val();//
-		var describe=$('#testforest_describe').val();//
-		var model=$('#testforest_model').val();
-		// 弹出进度框
-		popupProgressbar('分类MR','testforest任务提交中...',1000);
-		// ajax 异步提交任务
-		
-		callByAJax('cloud/cloud_submitJobNotMR.action',{algorithm:"TestForestRunnable",
-			arg1:input,arg2:output,arg3:describe,arg4:model});
-		
-	});
-//	==================testforest
-	
+	// svm train---
+	$('#svm_train_submit').bind('click', function(){
+		// testOrNot input minPartitions output targetIndex "
+        //    "splitter numIteration stepSize regParam miniBatchFraction regMethod"
+		var input=$('#svm_train_input').val();//
+        var minPartitions = $('#svm_train_minPartitions').numberbox('getValue');//
+        var output=$('#svm_train_output').val();//
+        var targetIndex=$('#svm_train_targetIndex').numberbox('getValue');//
+        var numIteration=$('#svm_train_numIteration').numberbox('getValue');//
+        var stepSize=$('#svm_train_stepSize').numberbox('getValue');//
+        var regParam=$('#svm_train_regParam').numberbox('getValue');//
+        var minBatchFraction=$('#svm_train_minBatchFraction').numberbox('getValue');//
+        var splitter=$('#svm_train_splitter').val();
+        var regMethod=$('#svm_train_regMethod').combobox("getValue");
 
+        //思路2：弹出进度框，只显示提交的状态，提交成功，返回提交的任务id，提交失败，返回提示信息；
+        // 提交成功后，在后台，存储数据库相应信息；
+        popupProgressbar('分类','SVM建模任务初始化中...',1000);
+        // ajax 异步提交任务
+        console.info("input:"+input+",output:"+output+",targetIndex:"+targetIndex+
+        ",numIteration:"+numIteration+",splitter:"+splitter+",regMethod:"+regMethod+",stepSize:"+stepSize+
+        ",regParam:"+regParam+",minBatchFraction:"+minBatchFraction);
+
+        // 状态有：任务初始化，任务提交完成；任务运行进度（初始化，accept，running，finished）
+        callByAJax('cloud/cloud_submitSparkJob.action',{algorithm:"classification.SVMCallable",
+            arg1:input,arg2:minPartitions,arg3:output,arg4:targetIndex,arg5:splitter
+            ,arg6:numIteration,arg7:stepSize,arg8:regParam,arg9:minBatchFraction,arg10:regMethod
+            });
+
+	});
+//	==================svm train
 	
 	
 });

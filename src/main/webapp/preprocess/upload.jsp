@@ -39,7 +39,7 @@
 				<td><select id="prepare_select" class="easyui-combobox" name="dept"
 					style="width:200px;">
 						<option value="logistic.dat">logistic</option>
-						<option value="linear_regression.data">linear_regression</option>
+						<option value="svm.dat">svm</option>
 						<option value="split.txt">split</option>
 
 				</select></td>
