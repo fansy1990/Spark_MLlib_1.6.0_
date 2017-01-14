@@ -291,4 +291,18 @@ public class Utils {
         }
         return null;
     }
+
+    /**
+     * 算法名映射到类名，再映射到JobName
+     * @param algorithm
+     * @return
+     */
+    public static String algorithm2JobName(String algorithm){
+        try{
+          return  getKey(algorithm2ShowId(algorithm),dbOrFile);
+        }catch (Exception e){
+            logger.warn("算法："+ algorithm + "类名转化为JobName异常!");
+        }
+        return null;
+    }
 }

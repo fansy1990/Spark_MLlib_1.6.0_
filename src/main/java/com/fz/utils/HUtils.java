@@ -415,6 +415,7 @@ public class HUtils {
                             case 2:
                                 jobInfo.setRunState(JobState.FAILED);
                                 SparkUtils.cleanupStagingDir(jobInfo.getJobId());
+                                jobInfo.setErrorInfo(appReport.getDiagnostics().substring(0,Utils.EXCEPTIONMESSAGELENGTH));
                                 jobInfo.setFinished(true);break;
                             case 3:
                                 jobInfo.setRunState(JobState.KILLED);
@@ -428,6 +429,7 @@ public class HUtils {
                     case 6:
                         jobInfo.setRunState(JobState.FAILED);
                         SparkUtils.cleanupStagingDir(jobInfo.getJobId());
+                        jobInfo.setErrorInfo(appReport.getDiagnostics().substring(0,Utils.EXCEPTIONMESSAGELENGTH));
                         jobInfo.setFinished(true);break;
                     case 7:
                         jobInfo.setRunState(JobState.KILLED);

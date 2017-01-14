@@ -35,40 +35,56 @@ $(function() {
 				},
 				idField:'id',
 				columns : [[
+						/*
+						// ID 不需要显示
 						{
 							field : 'id',
 							title : 'ID',
 							width : '30'
-						},
+						},*/
 						{
 							field : 'jobId',
 							title : '任务ID',
-							width : '250'
+							width : '150',
+                            formatter : formatter_fun_jobId
 						},
+                        {
+                            field : 'jobName',
+                            title : '任务名称',
+                            width : '250'
+                        },
 						{
 							field : 'runState',
 							title : '运行状态',
-							width : '100'
+							width : '90'
 						},
                         {
                             field : 'startTime',
                             title : '启动时间',
-                            width : '170',
-                            formatter : formatter_fun
+                            width : '160',
+                            formatter : formatter_fun_time
                         },
 
                      {
                          field : 'modifiedTime',
                          title : '更新时间',
-                         width : '170',
-                         formatter : formatter_fun
+                         width : '160',
+                         formatter : formatter_fun_time
                      },
+                    {
+                        field : 'errorInfo',
+                        title : '异常信息',
+                        width : '160'
+                    }
+                     /*
+                     // 不显示是否完成，用户在运行状态即可看出
+                     ,
                      {
                          field : 'finished',
                          title : '是否完成',
                          width : '70',
                          formatter : formatter_trueOrFalse
-                     } ]]
+                     }*/ ]]
 			    });
 	//jobinfoId
 });
@@ -85,9 +101,20 @@ function formatter_trueOrFalse(value,row,index){
     }
 }
 /**
+ * 格式化JobId
+ * @param value
+ * @param row
+ * @param index
+ * @returns {string}
+ */
+function formatter_fun_jobId(value,row,index){
+    //application_1483333008342_0010
+    return value.substring(12,30);
+}
+/**
 * 格式化时间显示
 */
-function formatter_fun(value,row,index){
+function formatter_fun_time(value,row,index){
     var date = new Date(value);
     var year = date.getFullYear().toString();
     var month = (date.getMonth() + 1);

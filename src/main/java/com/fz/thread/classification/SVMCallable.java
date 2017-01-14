@@ -104,7 +104,7 @@ public class SVMCallable implements CallableWithArgs {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.warn("SVM Classification 提交任务错误！");
+			log.warn(appName + " 提交任务错误！");
 		}
         return null;
 	}

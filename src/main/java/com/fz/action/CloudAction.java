@@ -134,7 +134,7 @@ public class CloudAction extends ActionSupport {
                 Utils.updateMap(map,"true","任务提交成功，其ID为："+ result,
                         Utils.algorithm2ShowId(algorithm)+"_id");
                 // 写数据到数据库中，JobID相关，任务状态为Submitted
-                if(!currentJobInfoService.save(new JobInfo(result))){
+                if(!currentJobInfoService.save(new JobInfo(result,Utils.algorithm2JobName(algorithm)))){
 //                    map.put("flag","false");
 //                    map.put("msg","提交任务成功，但是把相关数据存入数据库失败，请查看后台日志！");
                     Utils.updateMap(map,"false","提交任务成功，但是把相关数据存入数据库失败，请查看后台日志！",
