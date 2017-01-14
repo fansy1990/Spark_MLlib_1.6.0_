@@ -49,10 +49,12 @@ public class DBAction extends ActionSupport {
         List<Object> list = null;
         try {
             list = HUtils.updateJobInfo(jobInfos);
-            dBService.updateTableData(list);
+            if(list != null || list.size()>0) {
+                dBService.updateTableData(list);
+            }
         }catch (Exception e){
             e.printStackTrace();
-            Utils.simpleLog("更新任务状态异常！");
+            log.warn("更新任务状态异常！");
             jsonMap.put("total", 0);
             jsonMap.put("rows", null);
             Utils.write2PrintWriter(JSON.toJSONString(jsonMap));

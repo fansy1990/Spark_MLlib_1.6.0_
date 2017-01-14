@@ -16,6 +16,8 @@ import org.apache.hadoop.util.ReflectionUtils;
 import org.apache.hadoop.yarn.api.records.ApplicationReport;
 import org.apache.hadoop.yarn.client.api.YarnClient;
 import org.apache.hadoop.yarn.exceptions.YarnException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 import java.io.*;
@@ -35,7 +37,7 @@ public class HUtils {
     private static Configuration conf = null;
 	private static FileSystem fs = null;
 
-
+    private static Logger log = LoggerFactory.getLogger(HUtils.class);
 
 
 	private static YarnClient client = null;
@@ -84,7 +86,7 @@ public class HUtils {
                         Utils.getKey("cdh.yarn.application.classpath", Utils.dbOrFile));break;
                 case "hdp" :conf.set("yarn.application.classpath",
                         Utils.getKey("hdp.yarn.application.classpath", Utils.dbOrFile));break;
-                default: Utils.simpleLog("由于platform不是apahce/cdh/hdp，所以不设置yarn.application.classpath参数");
+                default: log.warn("由于platform不是apahce/cdh/hdp，所以不设置yarn.application.classpath参数");
             }
 
 		}
@@ -359,11 +361,11 @@ public class HUtils {
 				srcs[i]=files[i].getPath();
 			}
 			boolean flag =FileUtil.copy(fs,srcs,fs,out,false,true,conf);
-			Utils.simpleLog("数据从" + input.toString() + "传输到" + out.toString() +
+			log.info("数据从" + input.toString() + "传输到" + out.toString() +
                     (flag ? "成功" : "失败") + "!");
 		}catch(Exception e){
 			e.printStackTrace();
-			Utils.simpleLog("数据从" + input.toString() + "传输到" + out.toString() +
+			log.warn("数据从" + input.toString() + "传输到" + out.toString() +
                     "失败" + "!");
 		}
 	}
@@ -418,10 +420,22 @@ public class HUtils {
                                 jobInfo.setRunState(JobState.KILLED);
                                 SparkUtils.cleanupStagingDir(jobInfo.getJobId());
                                 jobInfo.setFinished(true);break;
-                            default: Utils.simpleLog("App:" + jobInfo.getJobId() + "获取任务状态异常!");
+                            default: log.warn("App:" + jobInfo.getJobId() + "获取任务状态异常! " +
+                                    "appReport.getFinalApplicationStatus():"+appReport.getFinalApplicationStatus().name()
+                            +",ordinal:"+ appReport.getFinalApplicationStatus().ordinal());
                         }
-
-                    default: Utils.simpleLog("App:" + jobInfo.getJobId() + "获取任务状态异常!");
+                        break;
+                    case 6:
+                        jobInfo.setRunState(JobState.FAILED);
+                        SparkUtils.cleanupStagingDir(jobInfo.getJobId());
+                        jobInfo.setFinished(true);break;
+                    case 7:
+                        jobInfo.setRunState(JobState.KILLED);
+                        SparkUtils.cleanupStagingDir(jobInfo.getJobId());
+                        jobInfo.setFinished(true);break;
+                    default: log.warn("App:" + jobInfo.getJobId() + "获取任务状态异常!"+
+                            "appReport.getYarnApplicationState():"+appReport.getYarnApplicationState().name()
+                            +",ordinal:"+ appReport.getYarnApplicationState().ordinal());
                 }
                 jobInfo.setModifiedTime(new Date());
             }

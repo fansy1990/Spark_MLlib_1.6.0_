@@ -8,6 +8,8 @@ import com.fz.utils.HUtils;
 import com.fz.utils.SparkUtils;
 import com.fz.utils.Utils;
 import org.apache.hadoop.fs.Path;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * logistic regression
@@ -15,7 +17,7 @@ import org.apache.hadoop.fs.Path;
  * @date 2017-1-1
  */
 public class LogisticCallable implements CallableWithArgs {
-
+    private Logger log = LoggerFactory.getLogger(LogisticCallable.class);
     private String appName = "Logistic Regression Train Model ";
     private String className = "com.fz.classification.LogisticRegression";
 //	com.fz.classification.LogisticRegression
@@ -56,7 +58,7 @@ public class LogisticCallable implements CallableWithArgs {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			Utils.simpleLog("Logistic Regression 提交任务错误！");
+			log.warn("Logistic Regression 提交任务错误！");
 		}
         return null;
 	}

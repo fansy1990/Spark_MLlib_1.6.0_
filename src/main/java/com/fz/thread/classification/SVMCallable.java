@@ -8,6 +8,8 @@ import com.fz.utils.HUtils;
 import com.fz.utils.SparkUtils;
 import com.fz.utils.Utils;
 import org.apache.hadoop.fs.Path;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * svm classification
@@ -15,7 +17,7 @@ import org.apache.hadoop.fs.Path;
  * @date 2017-1-9
  */
 public class SVMCallable implements CallableWithArgs {
-
+    private Logger log = LoggerFactory.getLogger(SVMCallable.class);
     private String appName = "SVM Classification Train Model ";
     private String className = "com.fz.classification.SVM";
 //	com.fz.classification.SVM
@@ -102,7 +104,7 @@ public class SVMCallable implements CallableWithArgs {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			Utils.simpleLog("SVM Classification 提交任务错误！");
+			log.warn("SVM Classification 提交任务错误！");
 		}
         return null;
 	}

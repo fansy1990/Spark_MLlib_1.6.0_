@@ -10,6 +10,8 @@ import com.fz.thread.CallableWithArgs;
 import com.fz.thread.not.INotMRJob;
 import com.fz.utils.Utils;
 import com.opensymphony.xwork2.ActionSupport;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -32,7 +34,7 @@ public class CloudAction extends ActionSupport {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+	private Logger log = LoggerFactory.getLogger(CloudAction.class);
 	private String algorithm; // 算法, 实例化的类名 ,如 classification.LogisticCallable
 
     private ExecutorService executorService = Executors.newCachedThreadPool();
@@ -105,7 +107,7 @@ public class CloudAction extends ActionSupport {
                 if (future.isDone()) {
                     try {
                         result = future.get();
-                        Utils.simpleLog("算法："+algorithm+"被成功提交，其任务ID是："+result);
+                        log.info("算法："+algorithm+"被成功提交，其任务ID是："+result);
                         break;
                     } catch (InterruptedException e) {
                         // ignored
@@ -114,7 +116,7 @@ public class CloudAction extends ActionSupport {
                     }
                 }
                 if(i>=Utils.SUBMIT2APPIDTIMEOUT){
-                    Utils.simpleLog("已过"+Utils.SUBMIT2APPIDTIMEOUT+"秒提交周期，集群资源不足或网络异常!");
+                    log.warn("已过"+Utils.SUBMIT2APPIDTIMEOUT+"秒提交周期，集群资源不足或网络异常!");
                     break;
                 }
                 Thread.sleep(1000);

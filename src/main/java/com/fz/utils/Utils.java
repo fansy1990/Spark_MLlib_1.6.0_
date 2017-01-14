@@ -169,17 +169,18 @@ public class Utils {
 	
 	/**
 	 * 简单日志
+     * 不采用Utils日志，而在每个类中加入日志
 	 * @param msg
 	 */
-	public static void simpleLog(String msg){
-//		System.out.println(new java.util.Date()+":"+msg);
-	    logger.info(msg);
-    }
-
-    public static void simpleWarnLog(String msg){
-//		System.out.println(new java.util.Date()+":"+msg);
-        logger.warn(msg);
-    }
+//	public static void simpleLog(String msg){
+////		System.out.println(new java.util.Date()+":"+msg);
+//	    logger.info(msg);
+//    }
+//
+//    public static void simpleWarnLog(String msg){
+////		System.out.println(new java.util.Date()+":"+msg);
+//        logger.warn(msg);
+//    }
 
     /**
      * 更新map值，用于返回前台
@@ -286,7 +287,7 @@ public class Utils {
             String[] alg_class = algorithm.split("\\.");
             return alg_class[alg_class.length - 1];
         }catch(Exception e){
-            Utils.simpleWarnLog("算法：" + algorithm + "类名变换异常!");
+            logger.warn("算法：" + algorithm + "类名变换异常!");
         }
         return null;
     }

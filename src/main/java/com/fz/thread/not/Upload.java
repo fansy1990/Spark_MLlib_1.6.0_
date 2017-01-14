@@ -5,6 +5,8 @@ package com.fz.thread.not;
 
 import com.fz.utils.HUtils;
 import com.fz.utils.Utils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +21,7 @@ import java.util.Map;
  */
 public class Upload implements INotMRJob {
 
+    private Logger logger = LoggerFactory.getLogger(Upload.class);
 	private String select_value;
 	private String algorithm;
 	private String flag;
@@ -56,7 +59,7 @@ public class Upload implements INotMRJob {
 //                 ret.put("flag", "true");
 //                 ret.put("msg", "上传至 HDFS:'" + hdfs + "'" + "成功！");
                 Utils.updateMap(ret,"true",local + "上传至" + hdfs + "成功!","upload_return");
-                 Utils.simpleLog(hdfs + "上传至" + hdfs + "成功");
+                 logger.info(hdfs + "上传至" + hdfs + "成功");
              }
         }catch(Exception e){
 //            ret.put("flag", "false");

@@ -239,7 +239,7 @@ public class DBService {
             // 做完更新后，需要更新Configuration
             HUtils.updateConfiguration();
         }catch(Exception e){
-			Utils.simpleLog("HConstant表初始化异常！");
+			log.warn("HConstant表初始化异常！");
 			throw e;
 		}
 		return true;
