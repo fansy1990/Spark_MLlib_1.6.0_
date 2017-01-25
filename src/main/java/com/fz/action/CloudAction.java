@@ -51,7 +51,7 @@ public class CloudAction extends ActionSupport {
     private CurrentJobInfoService currentJobInfoService;
 
     // 算法页面参数,每个页面不超过11个参数,如果超过，则需要修改
-	private String arg1; 
+	private String arg1; // 第一个参数一定要是输入路径
 	private String arg2;
 	private String arg3;
 	private String arg4;
@@ -134,7 +134,8 @@ public class CloudAction extends ActionSupport {
                 Utils.updateMap(map,"true","任务提交成功，其ID为："+ result,
                         Utils.algorithm2ShowId(algorithm)+"_id");
                 // 写数据到数据库中，JobID相关，任务状态为Submitted
-                if(!currentJobInfoService.save(new JobInfo(result,Utils.algorithm2JobName(algorithm)))){
+                if(!currentJobInfoService.save(new JobInfo(result,Utils.algorithm2JobName(algorithm),
+                        getAlgoArgs(),Utils.algorithm2Type(algorithm)))){
 //                    map.put("flag","false");
 //                    map.put("msg","提交任务成功，但是把相关数据存入数据库失败，请查看后台日志！");
                     Utils.updateMap(map,"false","提交任务成功，但是把相关数据存入数据库失败，请查看后台日志！",
@@ -153,10 +154,26 @@ public class CloudAction extends ActionSupport {
 		Utils.write2PrintWriter(JSON.toJSONString(map));
 	}
 
+    /**
+     * 获取参数字符串，逗号分割
+     * @return
+     */
+    private String getAlgoArgs() {
+
+        StringBuffer buffer = new StringBuffer();
+        String[] args = new String[]{arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11};
+        for(String arg : args){
+            if(arg != null){
+                buffer.append(arg).append(",");
+            }else {
+                break;
+            }
+        }
+        return buffer.substring(0,buffer.length()-1);
+    }
 
 
-
-	public String getAlgorithm() {
+    public String getAlgorithm() {
 		return algorithm;
 	}
 

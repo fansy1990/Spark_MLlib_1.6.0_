@@ -278,7 +278,7 @@ public class HUtils {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String readTxt(String input,String lines,String splitter) throws Exception{
+	public static String readTxt(String input,String lines,String splitter) throws IOException{
 		StringBuffer buff = new StringBuffer();
 		Path path = new Path(input);
 		long lineNum= Long.parseLong(lines);
@@ -292,15 +292,15 @@ public class HUtils {
 			while ((line = read.readLine()) != null&&lineNum-->0) {
 				buff.append(line).append(splitter);
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
-			throw e;
+			throw e;// 抛出此异常即可
 		} finally {
 			try {
 				in.close();
 			} catch (IOException e) {
 				e.printStackTrace();
-				throw e;
+//				throw e;// 此异常不需要抛出
 			}
 		}
 		return buff.toString();

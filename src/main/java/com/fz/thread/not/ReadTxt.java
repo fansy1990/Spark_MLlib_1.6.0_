@@ -6,6 +6,7 @@ package com.fz.thread.not;
 import com.fz.utils.HUtils;
 import com.fz.utils.Utils;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,11 +39,11 @@ public class ReadTxt implements INotMRJob {
 //			map.put("return_txt", txt);
             Utils.updateMap(map,"true","读取成功","readtxt_return",txt);
 		}catch(Exception e){
-			e.printStackTrace();
+//			e.printStackTrace();
 //			map.put("flag", "false");
 //			map.put("msg", e.getMessage().substring(0, Utils.EXCEPTIONMESSAGELENGTH));
 
-            Utils.updateMap(map,"false",e.getMessage().substring(0, Utils.EXCEPTIONMESSAGELENGTH)
+            Utils.updateMap(map,"false",e
                     ,"readtxt_return");
 		}
 		return map;

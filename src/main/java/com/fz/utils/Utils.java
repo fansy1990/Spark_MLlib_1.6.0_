@@ -5,6 +5,7 @@ package com.fz.utils;
 
 //import java.util.HashMap;
 
+import com.fz.model.AlgoType;
 import com.fz.model.ObjectInterface;
 import com.fz.service.DBService;
 import org.apache.struts2.ServletActionContext;
@@ -211,6 +212,20 @@ public class Utils {
         updateMap(map,flagStr,msgStr,return_showStr,msgStr);
         return ;
     }
+
+    public static void updateMap(Map<String,Object> map , String flagStr,Exception e,
+                                 String return_showStr){
+        String msgStr = "没有信息！";
+        if(e == null || e.getMessage() == null){
+
+        }else if(e.getMessage().length() < Utils.EXCEPTIONMESSAGELENGTH){
+            msgStr = e.getMessage();
+        }else if(e.getMessage().length() >= Utils.EXCEPTIONMESSAGELENGTH){
+            msgStr = e.getMessage().substring(0,Utils.EXCEPTIONMESSAGELENGTH);
+        }
+        updateMap(map,flagStr,msgStr,return_showStr,msgStr);
+        return ;
+    }
 	
 	/**
 	 * double 或者float或者int转为百分数
@@ -304,5 +319,25 @@ public class Utils {
             logger.warn("算法："+ algorithm + "类名转化为JobName异常!");
         }
         return null;
+    }
+    private static  Map<String,AlgoType> algoTypeMap = new HashMap<String,AlgoType>();
+
+    /**
+     * 算法名映射为 算法类型
+     * 主要用于判断两个算法是否可以对比
+     * @param algorithm
+     * @return
+     */
+    public static AlgoType algorithm2Type(String algorithm) {
+        try {
+            if(algoTypeMap.size() == 0){
+                algoTypeMap.put("LogisticCallable",AlgoType.CLASSIFICATION);
+                algoTypeMap.put("SVMCallable",AlgoType.CLASSIFICATION);
+            }
+            return algoTypeMap.get(algorithm2ShowId(algorithm));
+        }catch(Exception e){
+            logger.warn("算法："+ algorithm +" 获取算法类型异常！");
+        }
+        return null ;
     }
 }

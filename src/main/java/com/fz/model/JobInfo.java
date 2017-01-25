@@ -9,6 +9,7 @@ import java.util.Date;
 
 /**
  * Spark任务监控简要信息类
+ * @2017-1-23 添加输入路径／算法类别
  *
  * @author fansy
  * @date 2017-1-2
@@ -24,7 +25,25 @@ public class JobInfo implements Serializable {
     private Integer id;
     private String jobId;
 
+    public String getAlgoArgs() {
+        return algoArgs;
+    }
 
+    public void setAlgoArgs(String algoArgs) {
+        this.algoArgs = algoArgs;
+    }
+
+    @Enumerated(EnumType.STRING)
+    public AlgoType getAlgoType() {
+        return algoType;
+    }
+
+    public void setAlgoType(AlgoType algoType) {
+        this.algoType = algoType;
+    }
+
+    private String algoArgs ;
+    private AlgoType algoType;
     // 添加两个 属性
     private String jobName;
 
@@ -113,15 +132,32 @@ public class JobInfo implements Serializable {
      *
      * @param jobId
      */
-    public JobInfo(String jobId, String jobName) {
+//    public JobInfo(String jobId, String jobName) {
+//        this.jobId = jobId;
+//        this.jobName = jobName;
+//        this.errorInfo = "";// 设置此参数为空字符串，否则出现 NA
+//        this.startTime = new Date(System.currentTimeMillis());
+//        this.runState = JobState.SUBMITTED;
+//        this.finished = false;
+//    }
+    /**
+     * 任务初始化
+     *
+     * @param jobId
+     * @param  jobName
+     * @param algoArgs
+     * @param algoType
+     */
+    public JobInfo(String jobId, String jobName,String algoArgs , AlgoType algoType) {
         this.jobId = jobId;
-        this.jobName =jobName;
-        this.errorInfo="";// 设置此参数为空字符串，否则出现 NA
+        this.jobName = jobName;
+        this.errorInfo = "";// 设置此参数为空字符串，否则出现 NA
         this.startTime = new Date(System.currentTimeMillis());
         this.runState = JobState.SUBMITTED;
         this.finished = false;
+        this.algoType = algoType;
+        this.algoArgs = algoArgs;
     }
-
 
     @Override
     public String toString() {
