@@ -74,10 +74,10 @@
 			}
 		},{
 			"id":133,
-			"text":"seqdump+",
+			"text":"Decision Tree",
 			"attributes":{
 				"folder":"0",
-				"url":"utils/seqdump.jsp"	
+				"url":"classification/decisiontree_train.jsp"
 			}
 		},{
 			"id":134,

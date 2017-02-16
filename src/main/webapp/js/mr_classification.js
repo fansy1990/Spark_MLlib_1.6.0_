@@ -60,5 +60,35 @@ $(function(){
 	});
 //	==================svm train
 	
-	
+	// decisiontree train---
+    	$('#decisiontree_train_submit').bind('click', function(){
+    		//    testOrNot input minPartitions output targetIndex " +
+             //   "splitter impurity maxDepth algo maxBins numClasses<numClass is only for classifictation>
+
+    		var input=$('#decisiontree_train_input').val();//
+            var minPartitions = $('#decisiontree_train_minPartitions').numberbox('getValue');//
+            var output=$('#decisiontree_train_output').val();//
+            var targetIndex=$('#decisiontree_train_targetIndex').numberbox('getValue');//
+            var impurity=$('#decisiontree_train_impurity').combobox('getValue');//
+            var maxDepth=$('#decisiontree_train_maxDepth').numberbox('getValue');//
+            var algo=$('#decisiontree_train_algo').combobox('getValue');//
+            var maxBins=$('#decisiontree_train_maxBins').numberbox('getValue');//
+            var splitter=$('#decisiontree_train_splitter').val();
+            var numClasses=$('#decisiontree_train_numClasses').numberbox("getValue");
+    
+            //思路2：弹出进度框，只显示提交的状态，提交成功，返回提交的任务id，提交失败，返回提示信息；
+            // 提交成功后，在后台，存储数据库相应信息；
+            popupProgressbar('分类','decisiontree建模任务初始化中...',1000);
+            // ajax 异步提交任务
+
+            // 状态有：任务初始化，任务提交完成；任务运行进度（初始化，accept，running，finished）
+            callByAJax('cloud/cloud_submitSparkJob.action',{algorithm:"classification.DecisionTreeCallable",
+                arg1:input,arg2:minPartitions,arg3:output,arg4:targetIndex,arg5:splitter
+                ,arg6:impurity,arg7:maxDepth,arg8:algo,arg9:maxBins,arg10:numClasses
+                });
+    
+    	});
+    //	==================decisiontree train
+
+
 });
