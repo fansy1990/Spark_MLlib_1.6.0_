@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
  
 <body>
-	<div style="padding-left: 30px;font-size: 20px;padding-top:10px;">Decision Tree模型训练任务算法调用</div>
+	<div style="padding-left: 30px;font-size: 20px;padding-top:10px;">Gradient Boost Tree模型训练任务算法调用</div>
 	<br>
 	
 	<div style="padding-left: 30px;font-size: 20px;padding-top:10px;">  
@@ -100,7 +100,7 @@
 			
 		</table>
         <br>
-        <div id="gradientboosttreeCallable_id" style="padding-left: 30px;font-size: 14px;padding-top:10px;"></div>
+        <div id="GradientBoostTreeCallable_id" style="padding-left: 30px;font-size: 14px;padding-top:10px;"></div>
 	</div> 
 	<script type="text/javascript" src="js/mr_classification.js"></script>  
 
