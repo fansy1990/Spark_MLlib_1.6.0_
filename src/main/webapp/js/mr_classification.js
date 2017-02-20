@@ -91,4 +91,35 @@ $(function(){
     //	==================decisiontree train
 
 
+    // gradientboosttree train---
+    $('#gradientboosttree_train_submit').bind('click', function(){
+
+//    testOrNot input minPartitions output targetIndex " +
+//    "splitter algo lossType numIteration  maxDepth [numClasses]
+        var input=$('#gradientboosttree_train_input').val();//
+        var minPartitions = $('#gradientboosttree_train_minPartitions').numberbox('getValue');//
+        var output=$('#gradientboosttree_train_output').val();//
+        var targetIndex=$('#gradientboosttree_train_targetIndex').numberbox('getValue');//
+        var lossType=$('#gradientboosttree_train_lossType').combobox('getValue');//
+        var maxDepth=$('#gradientboosttree_train_maxDepth').numberbox('getValue');//
+        var algo=$('#gradientboosttree_train_algo').combobox('getValue');//
+        var numIteration=$('#gradientboosttree_train_numIteration').numberbox('getValue');//
+        var splitter=$('#gradientboosttree_train_splitter').val();
+        var numClasses=$('#gradientboosttree_train_numClasses').numberbox("getValue");
+
+        //思路2：弹出进度框，只显示提交的状态，提交成功，返回提交的任务id，提交失败，返回提示信息；
+        // 提交成功后，在后台，存储数据库相应信息；
+        popupProgressbar('分类','gradientboosttree建模任务初始化中...',1000);
+        // ajax 异步提交任务
+
+        // 状态有：任务初始化，任务提交完成；任务运行进度（初始化，accept，running，finished）
+        callByAJax('cloud/cloud_submitSparkJob.action',{algorithm:"classification.GradientBoostTreeCallable",
+            arg1:input,arg2:minPartitions,arg3:output,arg4:targetIndex,arg5:splitter
+            ,arg6:algo,arg7:lossType,arg8:numIteration,arg9:maxDepth,arg10:numClasses
+        });
+
+    });
+    //	==================gradientboosttree train
+
+
 });

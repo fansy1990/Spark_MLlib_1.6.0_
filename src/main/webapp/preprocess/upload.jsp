@@ -38,11 +38,13 @@
 				<td>数据初始化:</td>
 				<td><select id="prepare_select" class="easyui-combobox" name="dept"
 					style="width:200px;">
-						<option value="logistic.dat">logistic</option>
-						<option value="svm.dat">svm</option>
+					<option value="logistic.dat">logistic</option>
+					<option value="svm.dat">svm</option>
                     <option value="decisiontree_c.dat">decisiontree_c</option>
                     <option value="decisiontree_r.dat">decisiontree_r</option>
-						<option value="split.txt">split</option>
+                    <option value="gradientboosttree_r.dat">gradientboosttree_r</option>
+                    <option value="gradientboosttree_c.dat">gradientboosttree_c</option>
+
 
 				</select></td>
 
