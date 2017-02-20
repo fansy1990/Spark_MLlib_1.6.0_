@@ -45,6 +45,7 @@
                     <option value="gradientboosttree_r.dat">gradientboosttree_r</option>
                     <option value="gradientboosttree_c.dat">gradientboosttree_c</option>
                     <option value="isotonic.dat">isotonic</option>
+                    <option value="naivebayes.dat">naive bayes</option>
 
 
 				</select></td>
