@@ -175,4 +175,6 @@ $(function(){
     });
     //	==================naivebayes train
 
+
+
 });
