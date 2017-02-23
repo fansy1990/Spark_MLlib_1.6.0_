@@ -40,12 +40,13 @@
 					style="width:200px;">
 					<option value="logistic.dat">logistic</option>
 					<option value="svm.dat">svm</option>
-                    <option value="decisiontree_c.dat">decisiontree_c</option>
-                    <option value="decisiontree_r.dat">decisiontree_r</option>
-                    <option value="gradientboosttree_r.dat">gradientboosttree_r</option>
-                    <option value="gradientboosttree_c.dat">gradientboosttree_c</option>
+                    <option value="decisiontree_c.dat">decision tree_classification</option>
+                    <option value="decisiontree_r.dat">decision tree_regression</option>
+                    <option value="gradientboosttree_r.dat">gradient boost tree_r</option>
+                    <option value="gradientboosttree_c.dat">gradient boost tree_c</option>
                     <option value="isotonic.dat">isotonic</option>
                     <option value="naivebayes.dat">naive bayes</option>
+                    <option value="ridgeandlasso.dat">ridge and lasso</option>
 
 
 				</select></td>

@@ -175,6 +175,36 @@ $(function(){
     });
     //	==================naivebayes train
 
+// ridgeandlasso train---
+    $('#ridgeandlasso_train_submit').bind('click', function(){
+// testOrNot input minPartitions output targetIndex " +
+//    "splitter numIteration stepSize regParam miniBatchFraction hasIntercept regressionType
 
+        var input=$('#ridgeandlasso_train_input').val();//
+        var minPartitions = $('#ridgeandlasso_train_minPartitions').numberbox('getValue');//
+        var output=$('#ridgeandlasso_train_output').val();//
+        var targetIndex=$('#ridgeandlasso_train_targetIndex').numberbox('getValue');//
+        var splitter=$('#ridgeandlasso_train_splitter').val();
+        var numIteration=$('#ridgeandlasso_train_numIteration').numberbox('getValue');
+        var stepSize=$('#ridgeandlasso_train_stepSize').numberbox('getValue');
+        var regParam=$('#ridgeandlasso_train_regParam').numberbox('getValue');
+        var minBatchFraction=$('#ridgeandlasso_train_minBatchFraction').numberbox('getValue');
+        var hasIntercept=$('#ridgeandlasso_train_hasIntercept').combobox('getValue');
+        var regressionType=$('#ridgeandlasso_train_regressionType').combobox('getValue');
+
+        //思路2：弹出进度框，只显示提交的状态，提交成功，返回提交的任务id，提交失败，返回提示信息；
+        // 提交成功后，在后台，存储数据库相应信息；
+        popupProgressbar('分类','ridgeandlasso建模任务初始化中...',1000);
+        // ajax 异步提交任务
+
+        // 状态有：任务初始化，任务提交完成；任务运行进度（初始化，accept，running，finished）
+        callByAJax('cloud/cloud_submitSparkJob.action',{algorithm:"classification.RidgeAndLassoCallable",
+            arg1:input,arg2:minPartitions,arg3:output,arg4:targetIndex,arg5:splitter
+            ,arg6:numIteration,arg7:stepSize,arg8:regParam,arg9:minBatchFraction,arg10:hasIntercept,
+            arg11:regressionType
+        });
+
+    });
+    //	==================ridgeandlasso train
 
 });

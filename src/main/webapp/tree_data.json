@@ -81,38 +81,38 @@
 			}
 		},{
 			"id":134,
-			"text":"lucene_vector",
+			"text":"Gradient Boost Tree",
 			"attributes":{
 				"folder":"0",
-				"url":"utils/lucene_vector.jsp"
+				"url":"classification/gradientboosttree_train.jsp"
 			}
 		},{
 			"id":135,
-			"text":"arff_vector+",
+			"text":"Isotonic Regression",
 			"attributes":{
 				"folder":"0",
-				"url":"utils/arff_vector.jsp"
+				"url":"classification/isotonic_train.jsp"
 			}
 		},{
 			"id":136,
-			"text":"rowid",
+			"text":"Naive Bayes",
 			"attributes":{
 				"folder":"0",
-				"url":"utils/rowid.jsp"
+				"url":"classification/naivebayes_train.jsp"
 			}
 		},{
 			"id":137,
-			"text":"split",
+			"text":"Random Forest",
 			"attributes":{
 				"folder":"0",
-				"url":"utils/split.jsp"
+				"url":"classification/randomforest_train.jsp"
 			}
 		},{
 			"id":138,
-			"text":"matrixdump",
+			"text":"Ridge and Lasso Regression",
 			"attributes":{
 				"folder":"0",
-				"url":"utils/matrixdump.jsp"
+				"url":"classification/ridgeandlasso_train.jsp"
 			}
 		},{
 			"id":139,
