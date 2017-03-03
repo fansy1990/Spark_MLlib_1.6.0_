@@ -47,6 +47,7 @@
                     <option value="isotonic.dat">isotonic</option>
                     <option value="naivebayes.dat">naive bayes</option>
                     <option value="ridgeandlasso.dat">ridge and lasso</option>
+                    <option value="randomforest.dat">random forest</option>
 
 
 				</select></td>

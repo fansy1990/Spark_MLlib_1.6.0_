@@ -206,5 +206,35 @@ $(function(){
 
     });
     //	==================ridgeandlasso train
+    // random forest train---
+    $('#randomforest_train_submit').bind('click', function(){
+//    testOrNot input minPartitions output targetIndex " +
+        //"splitter algo impurity maxDepth  maxBins numTrees [numClasses]<numClass only for classification>
 
+        var input=$('#randomforest_train_input').val();//
+        var minPartitions = $('#randomforest_train_minPartitions').numberbox('getValue');//
+        var output=$('#randomforest_train_output').val();//
+        var targetIndex=$('#randomforest_train_targetIndex').numberbox('getValue');//
+        var splitter=$('#randomforest_train_splitter').val();
+        var algo=$('#randomforest_train_algo').combobox('getValue');
+        var impurity=$('#randomforest_train_impurity').combobox('getValue');
+        var maxDepth=$('#randomforest_train_maxDepth').numberbox('getValue');
+        var maxBins=$('#randomforest_train_maxBins').numberbox('getValue');
+        var numTrees=$('#randomforest_train_numTrees').numberbox('getValue');
+        var numClasses=$('#randomforest_train_numClasses').combobox('getValue');
+
+        //思路2：弹出进度框，只显示提交的状态，提交成功，返回提交的任务id，提交失败，返回提示信息；
+        // 提交成功后，在后台，存储数据库相应信息；
+        popupProgressbar('分类','randomforest建模任务初始化中...',1000);
+        // ajax 异步提交任务
+
+        // 状态有：任务初始化，任务提交完成；任务运行进度（初始化，accept，running，finished）
+        callByAJax('cloud/cloud_submitSparkJob.action',{algorithm:"classification.RandomForestCallable",
+            arg1:input,arg2:minPartitions,arg3:output,arg4:targetIndex,arg5:splitter
+            ,arg6:algo,arg7:impurity,arg8:maxDepth,arg9:maxBins,arg10:numTrees,
+            arg11:numClasses
+        });
+
+    });
+    //	==================randomforest train
 });
