@@ -114,335 +114,94 @@
 				"folder":"0",
 				"url":"classification/ridgeandlasso_train.jsp"
 			}
-		},{
-			"id":139,
-			"text":"regexconverter",
-			"attributes":{
-				"folder":"0",
-				"url":"utils/regexconverter.jsp"
-			}	
-		},{
-			"id":1390,
-			"text":"seqdirectory",
-			"attributes":{
-				"folder":"0",
-				"url":"utils/seqdirectory.jsp"
-			}	
-		},{
-			"id":1391,
-			"text":"seq2sparse",
-			"attributes":{
-				"folder":"0",
-				"url":"utils/seq2sparse.jsp"
-			}	
-		},{
-			"id":1392,
-			"text":"seq2encoded",
-			"attributes":{
-				"folder":"0",
-				"url":"utils/seq2encoded.jsp"
-			}	
-		},{
-			"id":1393,
-			"text":"seqwiki",
-			"attributes":{
-				"folder":"0",
-				"url":"utils/seqwiki.jsp"
-			}
-		},{
-			"id":1394,
-			"text":"seqmailarchives",
-			"attributes":{
-				"folder":"0",
-				"url":"utils/seqmailarchives.jsp"
-			}
-		},{
-			"id":1395,
-			"text":"lucene2seq",
-			"attributes":{
-				"folder":"0",
-				"url":"utils/lucene2seq.jsp"
-			}
-		},{
-			"id":1396,
-			"text":"concatmatrices",
-			"attributes":{
-				"folder":"0",
-				"url":"utils/concatmatrices.jsp"
-			}
-		},{
-			"id":1397,
-			"text":"resplitseq+",
-			"attributes":{
-				"folder":"0",
-				"url":"utils/resplitseq.jsp"
-			}
-		},{
-			"id":1398,
-			"text":"qualcluster",
-			"attributes":{
-				"folder":"0",
-				"url":"utils/qualcluster.jsp"
-			}
-		},{
-			"id":1399,
-			"text":"describe+",
-			"attributes":{
-				"folder":"0",
-				"url":"utils/describe.jsp"
-			}
 		}]
 	},{
 		"id":14,
-		"text":"Math MR",
-		"state":"closed",
+		"text":"协同过滤",
+		"state":"open",
 		"attributes":{
 				"folder":"1"
 		},
 		"children":[{
 			"id":141,
-			"text":"transpose",
+			"text":"ALS协同过滤",
 			"attributes":{
 				"folder":"0",
-				"url":"math/transpose.jsp"
-			}
-		},{
-			"id":142,
-			"text":"matrixmult",
-			"attributes":{
-				"folder":"0",
-				"url":"math/matrixmult.jsp"
-			}
-		},{
-			"id":143,
-			"text":"svd",
-			"attributes":{
-				"folder":"0",
-				"url":"math/svd.jsp"
-			}
-		},{
-			"id":144,
-			"text":"cleansvd",
-			"attributes":{
-				"folder":"0",
-				"url":"math/cleansvd.jsp"
-			}
-		},{
-			"id":145,
-			"text":"rowsimilarity",
-			"attributes":{
-				"folder":"0",
-				"url":"math/rowsimilarity.jsp"
-			}
-		},{
-			"id":146,
-			"text":"vecdist+",
-			"attributes":{
-				"folder":"0",
-				"url":"math/vecdist.jsp"
-			}
-		},{
-			"id":147,
-			"text":"ssvd",
-			"attributes":{
-				"folder":"0",
-				"url":"math/ssvd.jsp"
-			}
-		}]
-	},{
-		"id":17,
-		"text":"SGD MR",
-		"attributes":{
-			"folder":"1"
-		},
-		"state":"closed",
-		"children":[{
-			"id":170,
-			"text":"trainlogistic",
-			"attributes":{
-				"folder":"0",
-				"url":"sgd/trainlogistic.jsp"
-			}
-		}]
-	},{
-		"id":18,
-		"text":"HMM MR",
-		"attributes":{
-			"folder":"1"
-		},
-		"state":"closed",
-		"children":[{
-			"id":180,
-			"text":"baumwelch",
-			"attributes":{
-				"folder":"0",
-				"url":"hmm/baumwelch.jsp"
-			}
-		}]
-	},{
-		"id":19,
-		"text":"Classifier Utils",
-		"attributes":{
-			"folder":"1"
-		},
-		"state":"closed",
-		"children":[{
-			"id":190,
-			"text":"cmdump",
-			"attributes":{
-				"folder":"0",
-				"url":"classifier/cmdump.jsp"
-			}
-		}]
-	},{
-		"id":20,
-		"text":"推荐 MR",
-		"attributes":{
-			"folder":"1"
-		},
-		"state":"closed",
-		"children":[{
-			"id":200,
-			"text":"splitDataset+",
-			"attributes":{
-				"folder":"0",
-				"url":"recommenders/splitDataset.jsp"
-			}
-		},{
-			"id":2001,
-			"text":"parallelALS+",
-			"attributes":{
-				"folder":"0",
-				"url":"recommenders/parallelALS.jsp"
-			}
-		},{
-			"id":2002,
-			"text":"recommendfactorized+",
-			"attributes":{
-				"folder":"0",
-				"url":"recommenders/recommendfactorized.jsp"
-			}
-		},{
-			"id":2003,
-			"text":"evaluateFactorization+",
-			"attributes":{
-				"folder":"0",
-				"url":"recommenders/evaluateFactorization.jsp"
-			}
-		},{
-			"id":201,
-			"text":"recommenditembased+",
-			"attributes":{
-				"folder":"0",
-				"url":"recommenders/recommenditembased.jsp"
-			}
-		},{
-			"id":202,
-			"text":"itemsimilarity+",
-			"attributes":{
-				"folder":"0",
-				"url":"recommenders/itemsimilarity.jsp"
+				"url":"404.jsp"
 			}
 		}]
 	},{
 		"id":15,
-		"text":"聚类 MR",
+		"text":"聚类",
 		"attributes":{
-				"folder":"1"
-			},
+			"folder":"1"
+		},
 		"state":"closed",
 		"children":[{
 			"id":151,
-			"text":"kmeans+",
+			"text":"KMeans",
 			"attributes":{
 				"folder":"0",
-				"url":"clustering/kmeans.jsp"
+				"url":"404.jsp"
 			}
 		},{
-			"id":152,
-			"text":"fkmeans+",
-			"attributes":{
-				"folder":"0",
-				"url":"clustering/fuzzykmeans.jsp"
-			}
-		},{
-			"id":153,
-			"text":"cvb",
-			"attributes":{
-				"folder":"0",
-				"url":"clustering/cvb.jsp"
-			}
-		},{
-			"id":154,
-			"text":"cvb0_local",
-			"attributes":{
-				"folder":"0",
-				"url":"clustering/cvb0_local.jsp"
-			}
-		},{
-			"id":155,
-			"text":"canopy",
-			"attributes":{
-				"folder":"0",
-				"url":"clustering/canopy.jsp"
-			}
-		},{
-			"id":156,
-			"text":"spectralkmeans",
-			"attributes":{
-				"folder":"0",
-				"url":"clustering/spectralkmeans.jsp"
-			}
-		},{
-			"id":157,
-			"text":"clusterpp",
-			"attributes":{
-				"folder":"0",
-				"url":"clustering/clusterpp.jsp"
-			}
-		},{
-			"id":158,
-			"text":"streamingkmeans",
-			"attributes":{
-				"folder":"0",
-				"url":"clustering/streamingkmeans.jsp"
-			}
-		}]
+          "id":152,
+          "text":"GaussianMixture",
+          "attributes":{
+            "folder":"0",
+            "url":"404.jsp"
+          }
+        },{
+          "id":153,
+          "text":"PowerIterationClustering",
+          "attributes":{
+            "folder":"0",
+            "url":"404.jsp"
+          }
+        }]
 	},{
 		"id":16,
-		"text":"分类 MR",
+		"text":"降维",
 		"attributes":{
 			"folder":"1"
 		},
 		"state":"closed",
 		"children":[{
 			"id":160,
-			"text":"trainnb",
+			"text":"SVD",
 			"attributes":{
 				"folder":"0",
-				"url":"classification/trainnb.jsp"
+				"url":"404.jsp"
 			}
 		},{
-			"id":161,
-			"text":"testnb",
+          "id":161,
+          "text":"PCA",
+          "attributes":{
+            "folder":"0",
+            "url":"404.jsp"
+          }
+        }]
+	},{
+		"id":17,
+		"text":"关联规则",
+		"attributes":{
+			"folder":"1"
+		},
+		"state":"closed",
+		"children":[{
+			"id":170,
+			"text":"FP-Growth",
 			"attributes":{
 				"folder":"0",
-				"url":"classification/testnb.jsp"
+				"url":"404.jsp"
 			}
 		},{
-			"id":162,
-			"text":"buildforest",
-			"attributes":{
-				"folder":"0",
-				"url":"classification/buildforest.jsp"
-			}
-		},{
-			"id":163,
-			"text":"testforest",
-			"attributes":{
-				"folder":"0",
-				"url":"classification/testforest.jsp"
-			}
-		}]
+          "id":171,
+          "text":"Aprio Rules",
+          "attributes":{
+            "folder":"0",
+            "url":"404.jsp"
+          }
+        }]
 	}]
 }]
