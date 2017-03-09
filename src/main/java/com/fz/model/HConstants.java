@@ -1,9 +1,6 @@
 package com.fz.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -57,7 +54,8 @@ public class HConstants implements Serializable,ObjectInterface {
 	public void setCustKey(String custKey) {
 		this.custKey = custKey;
 	}
-
+//    @Lob
+//    @Basic(fetch = FetchType.LAZY)
 	public String getCustValue() {
 		return custValue;
 	}

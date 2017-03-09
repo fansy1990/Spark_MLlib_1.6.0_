@@ -196,7 +196,7 @@ public class DBService {
 	public boolean insertHConstants() throws Exception{
 		try{
 			baseDao.executeHql("delete HConstants");
-            // @TODO 是否需要修改次此配置 ???
+            //
 			baseDao.save(new HConstants("mapreduce.app-submission.cross-platform","true","是否跨平台提交任务"));
 			baseDao.save(new HConstants("fs.defaultFS","hdfs://quickstart:8020","namenode主机及端口"));
 			baseDao.save(new HConstants("mapreduce.framework.name","yarn","mapreduce 使用配置"));
@@ -218,7 +218,7 @@ public class DBService {
 //            baseDao.save(new HConsExecutorRunnabletants("spark.yarn.dist.archives",
 //                    "hdfs://quickstart:8020/user/root/hadoop-common-2.6.0-cdh5.8.0.jar",
 //                    "Spark executor extra jars ,逗号分割"));
-            // TODO 字段数据过长，待解决
+            // 字段数据过长，设置数据库中对应字段类型为Longtext（mysql）
             baseDao.save(new HConstants("spark.yarn.dist.archives","/usr/lib/spark/lib/spark-assembly.jar:" +
                     "/usr/lib/hadoop/lib/*:/usr/lib/hadoop/*:/usr/lib/hadoop-hdfs/lib/*:/usr/lib/hadoop-hdfs/*:" +
                     "/usr/lib/hadoop-mapreduce/lib/*:/usr/lib/hadoop-mapreduce/*:/usr/lib/hadoop-yarn/lib/*:" +

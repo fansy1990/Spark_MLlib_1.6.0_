@@ -32,8 +32,13 @@ public class BaseDaoImpl<T> implements BaseDAO<T> {
         return sessionFactory.getCurrentSession();  
     }  
   
-    public Serializable save(T o) {  
-        return this.getCurrentSession().save(o);  
+    public Serializable save(T o) {
+        try {
+            return this.getCurrentSession().save(o);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }  
   
     public void delete(T o) {  

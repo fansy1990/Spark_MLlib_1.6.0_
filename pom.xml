@@ -298,12 +298,12 @@
             <artifactId>jasper-runtime</artifactId>
             <version>${tomcat.version}</version>
             <scope>provided</scope>
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<groupId>javax.servlet</groupId>-->
-                    <!--<artifactId>servlet-api</artifactId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
     <build>
