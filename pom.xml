@@ -15,7 +15,7 @@
         <hibernate.version>4.3.1.Final</hibernate.version>
         <c3p0.version>0.9.1.2</c3p0.version>
         <javassist.version>3.12.1.GA</javassist.version>
-        <fastjson.version>1.1.36</fastjson.version>
+        <fastjson.version>1.2.25</fastjson.version>
         <hadoop.version>2.6.0-cdh5.8.0</hadoop.version>
         <spark.version>1.6.0-cdh5.8.0</spark.version>
         <tomcat.version>5.5.23</tomcat.version>
