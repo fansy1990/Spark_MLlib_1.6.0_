@@ -17,7 +17,7 @@
         <javassist.version>3.12.1.GA</javassist.version>
         <fastjson.version>1.1.36</fastjson.version>
         <hadoop.version>2.6.0-cdh5.8.0</hadoop.version>
-        <spark.version>1.6.0-cdh5.8.0</spark.version>
+        <spark.version>99.9.9</spark.version>
         <tomcat.version>5.5.23</tomcat.version>
         <aspectj.version>1.8.4</aspectj.version>
         <aspectj-lib.version>1.6.2</aspectj-lib.version>
